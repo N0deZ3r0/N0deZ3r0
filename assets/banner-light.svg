@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 150" width="1000" height="150" role="img" aria-label="N0deZ3r0 — privacy engineering, browser internals, automation">
+  <defs>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1f6feb"/>
+      <stop offset="100%" stop-color="#8957e5"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="999" height="149" rx="12" fill="#ffffff" stroke="#d0d7de"/>
+
+  <text x="56" y="70"
+        font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace"
+        font-size="44" font-weight="700" letter-spacing="1" fill="#1f2328">N0deZ3r0</text>
+
+  <rect x="57" y="88" width="72" height="3" rx="1.5" fill="url(#accent)"/>
+
+  <text x="57" y="117"
+        font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace"
+        font-size="15" letter-spacing="2.1" fill="#656d76">privacy engineering &#183; browser internals &#183; automation</text>
+</svg>
