@@ -97,7 +97,7 @@ have already applied to, fills in the cover letter and turns the pages.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top">
+<td width="50%" valign="top">
 
 #### [Quick-Ping-Chrome-Extension](https://github.com/N0deZ3r0/Quick-Ping-Chrome-Extension)
 
@@ -107,6 +107,18 @@ number when a host is unreachable.
 
 [![CI](https://github.com/N0deZ3r0/Quick-Ping-Chrome-Extension/actions/workflows/ci.yml/badge.svg)](https://github.com/N0deZ3r0/Quick-Ping-Chrome-Extension/actions/workflows/ci.yml)
 [![Version](https://img.shields.io/github/manifest-json/v/N0deZ3r0/Quick-Ping-Chrome-Extension?label=version&labelColor=0d1117&color=1f6feb)](https://github.com/N0deZ3r0/Quick-Ping-Chrome-Extension/releases/latest)
+
+</td>
+<td width="50%" valign="top">
+
+#### [X-ray-for-web](https://github.com/N0deZ3r0/X-ray-for-web)
+
+Chrome MV3 instrument, not a blocker: a journal of which script read which
+fingerprinting surface, and outgoing beacons parsed field by field — "this is a
+hash of your email" instead of base64
+
+[![CI](https://github.com/N0deZ3r0/X-ray-for-web/actions/workflows/ci.yml/badge.svg)](https://github.com/N0deZ3r0/X-ray-for-web/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/N0deZ3r0/X-ray-for-web?labelColor=0d1117&color=6e40c9)](https://github.com/N0deZ3r0/X-ray-for-web/blob/main/LICENSE)
 
 </td>
 </tr>
