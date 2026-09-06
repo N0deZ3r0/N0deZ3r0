@@ -42,6 +42,7 @@ documentation in both English and Russian.
 
 ## Selected work
 
+<!-- projects:start -->
 <table>
 <tr>
 <td width="50%" valign="top">
@@ -110,6 +111,7 @@ number when a host is unreachable.
 </td>
 </tr>
 </table>
+<!-- projects:end -->
 
 ## Activity
 

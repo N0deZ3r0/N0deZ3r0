@@ -1,0 +1,28 @@
+{
+  "$comment": "Hand-written copy for the profile README. A repository listed here keeps this text; anything public and not excluded is appended automatically with its GitHub description. Order below is the order on the page.",
+  "exclude": [
+    "N0deZ3r0"
+  ],
+  "projects": {
+    "fingerprint-shield": {
+      "en": "One coherent invented machine — the same one in the window, in every frame and in\nevery worker. A claim the layout can contradict produces a machine that cannot\nexist, which is rarer than the one you started from. 40 suites, and a Limits\nsection naming the sixteen things it knowingly does not close.",
+      "ru": "Одна согласованная выдуманная машина — та же самая в окне, в каждом фрейме и в\nкаждом воркере. Заявка, которую раскладка может опровергнуть, собирает машину,\nкоторой не бывает, а такая встречается реже исходной. 40 сьютов и раздел\n«Пределы» с шестнадцатью пунктами, которые заведомо не закрыты."
+    },
+    "Win11Privacy": {
+      "en": "Disables Microsoft's data collection, shows what has already been collected\nabout this machine, and keeps checking on a schedule — because feature updates\nquietly restore what you turned off.",
+      "ru": "Отключает сбор данных Microsoft, показывает, что об этой машине уже собрано, и\nпродолжает проверять систему по расписанию — потому что крупные обновления тихо\nвозвращают выключенное."
+    },
+    "hh-ru-job-automation-bot": {
+      "en": "Applies to hh.ru vacancies behind five layers of defence — 26 WebAssembly\nfunctions, 32 blocked trackers, 11 intercepted APIs — so the site cannot profile\nthe machine doing it.",
+      "ru": "Откликается на вакансии hh.ru за пятью рубежами обороны — 26 функций\nWebAssembly, 32 заблокированных трекера, 11 перехваченных API, — чтобы сайт не\nмог опознать машину, которая это делает."
+    },
+    "AutoSend-Letters-HH.RU": {
+      "en": "The same idea without an extension: one injected script that checks what you\nhave already applied to, fills in the cover letter and turns the pages.",
+      "ru": "То же самое без расширения: один внедряемый скрипт, который проверяет, куда вы\nуже откликнулись, заполняет сопроводительное письмо и листает страницы."
+    },
+    "Quick-Ping-Chrome-Extension": {
+      "en": "Response time for any site from the Chrome toolbar. Type an address, get\nmilliseconds. No account, no configuration, and `ERROR` instead of an invented\nnumber when a host is unreachable.",
+      "ru": "Время отклика любого сайта прямо из панели Chrome. Ввели адрес — получили\nмиллисекунды. Без регистрации, без настройки, и `ERROR` вместо выдуманного\nчисла, когда узел недоступен."
+    }
+  }
+}

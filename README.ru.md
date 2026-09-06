@@ -45,6 +45,7 @@ AmIUnique.
 
 ## Избранное
 
+<!-- projects:start -->
 <table>
 <tr>
 <td width="50%" valign="top">
@@ -113,6 +114,7 @@ WebAssembly, 32 заблокированных трекера, 11 перехва
 </td>
 </tr>
 </table>
+<!-- projects:end -->
 
 ## Активность
 

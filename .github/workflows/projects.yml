@@ -1,0 +1,57 @@
+name: Projects
+
+# Redraws the "Selected work" table from the public repositories, so a new one
+# reaches the profile without the README being edited by hand. Copy written by
+# hand lives in .github/profile/projects.json and is never overwritten.
+
+on:
+  schedule:
+    # Every six hours: a repository created at any point in the day is on the
+    # profile the same day, without polling the API for no reason.
+    - cron: '43 */6 * * *'
+  push:
+    branches: [main]
+    # Only when the inputs change. A README-only commit must not retrigger this,
+    # or the job would answer its own push forever.
+    paths:
+      - '.github/profile/projects.json'
+      - '.github/scripts/render_projects.py'
+      - '.github/workflows/projects.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: projects
+  cancel-in-progress: true
+
+jobs:
+  render:
+    name: Redraw and commit
+    runs-on: ubuntu-latest
+
+    steps:
+      # Pinned to the commit behind v4.2.2 rather than a moving tag: a tag can
+      # be repointed at new code, and this job runs with write access.
+      - name: Check out
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Redraw the table
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_OWNER: ${{ github.repository_owner }}
+        run: python3 .github/scripts/render_projects.py
+
+      - name: Commit the change, if there is one
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- README.md README.ru.md; then
+            echo 'The repository list has not moved.'
+            exit 0
+          fi
+          git config user.name  'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md README.ru.md
+          git commit --quiet -m 'Refresh the project list'
+          git push --quiet
