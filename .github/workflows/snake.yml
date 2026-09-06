@@ -31,6 +31,11 @@ jobs:
         uses: Platane/snk/svg-only@d8f6715049803e982ee5ff501b6b9b7d5deeb09b
         with:
           github_user_name: ${{ github.repository_owner }}
+          # The default job token sees the public calendar only, so days
+          # spent in private repositories come back empty. A personal token
+          # with the `read:user` scope, stored as SNAKE_TOKEN, returns the
+          # whole year; without the secret this falls back to the default.
+          github_token: ${{ secrets.SNAKE_TOKEN || github.token }}
           outputs: |
             dist/snake-dark.svg?palette=github-dark
             dist/snake-light.svg?palette=github-light
