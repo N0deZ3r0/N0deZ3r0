@@ -38,10 +38,23 @@ PITCH = CELL + GAP
 MARGIN = 12
 ROWS = 7
 
-LOOP = 20.0        # seconds for one full sweep
-MOVING = 0.93      # the tail of the loop is an empty board, before it refills
-JAWS = 0.32        # one open-and-shut
-TRAILS = (0.20, 0.40, 0.60, 0.80)   # how far behind Pac-Man each ghost runs
+LOOP = 36.0        # seconds end to end: sweep, then the ghosts catch him
+MOVING = 0.80      # the share of the loop spent eating
+CAUGHT = 0.865     # they have all arrived by here, and he dies
+GONE = 0.94        # dead; the board sits empty until the loop restarts
+JAWS = 0.34        # one open-and-shut
+
+# How far behind Pac-Man each ghost runs. Deliberately uneven: evenly spaced
+# trails read as one train rather than four things chasing him. The two given
+# an eased route surge and fall back within each row instead of holding
+# station, which is the rest of the disorder.
+TRAILS = (0.5, 1.1, 1.6, 2.2)
+EASED = (1, 3)
+# Each ghost bobs on its own clock, so they never line up: seconds, then how
+# far it rises, then a fixed nudge that keeps them from stacking into one
+# shape when they all arrive at the last cell.
+BOBS = ((1.05, 3.0, -3, 0), (1.35, 4.0, 3, -1), (0.90, 2.5, -1, 2),
+        (1.50, 3.5, 4, 1))
 
 # GitHub's own two palettes, so the graph looks like the graph it is drawn from.
 THEMES = {
@@ -154,30 +167,60 @@ def cells(weeks, theme, steps, order):
             shapes.append('<circle class="%s" cx="%.1f" cy="%.1f" r="1.6" '
                           'fill="%s"/>' % (name, x, y, theme["pellet"]))
         # Held at full opacity until the mouth arrives, then gone for the rest
-        # of the loop -- the final keyframe value persists to 100%.
+        # of the loop. The keyframe at 100% is not decoration: without one the
+        # browser fills in an implicit final keyframe from the property's own
+        # value, which is opacity 1 -- every eaten cell would fade back in over
+        # the remainder of the loop, and the board would refill behind him.
         rules.append(".%s{animation:%s %.1fs linear infinite}"
-                     "@keyframes %s{0%%,%.3f%%{opacity:1}%.3f%%{opacity:0}}"
+                     "@keyframes %s{0%%,%.3f%%{opacity:1}%.3f%%,100%%"
+                     "{opacity:0}}"
                      % (name, name, LOOP, name, eaten, eaten + 0.45))
     return shapes, rules
 
 
-def mover(name, corners, steps, trail):
+def mover(name, corners, steps, trail, easing="linear"):
     """Position keyframes for one character, phase-shifted by `trail`."""
     frames = []
     for step, column, row in corners:
         x, y = centre(column, row)
         frames.append("%.3f%%{transform:translate(%.1fpx,%.1fpx)}"
                       % (percent(step, steps), x, y))
-    # The sweep ends before the loop does; parking the character on the last
-    # corner keeps it still while the board sits empty.
+    # The sweep ends before the loop does; parking on the last corner is what
+    # gathers the ghosts around him there, each arriving its own trail late.
     frames.append("100%%{transform:translate(%.1fpx,%.1fpx)}"
                   % centre(corners[-1][1], corners[-1][2]))
-    rule = ".%s{animation:route %.1fs linear infinite" % (name, LOOP)
+    rule = ".%s{animation:route %.1fs %s infinite" % (name, LOOP, easing)
     if trail:
         # A negative delay is a phase shift. Shifting by a whole loop minus the
         # trail puts the ghost behind Pac-Man instead of in front of him.
         rule += ";animation-delay:%.2fs" % -(LOOP - trail)
     return rule + "}", "@keyframes route{%s}" % "".join(frames)
+
+
+def haunting(index, trail):
+    """A ghost's bob, and the window it is on the board at all.
+
+    Until its phase wraps, a trailing ghost is still parked at the end of the
+    previous sweep, which would show as a ghost sitting at the finish while
+    Pac-Man sets off. It is simply not drawn until its turn comes.
+    """
+    period, rise, dx, dy = BOBS[index]
+    appears = trail / LOOP * 100.0
+    return ("".join([
+        ".bob%d{animation:bob%d %.2fs ease-in-out infinite,"
+        "haunt%d %.1fs linear infinite}" % (index + 1, index + 1, period,
+                                            index + 1, LOOP),
+        "@keyframes bob%d{0%%,100%%{transform:translate(%dpx,%dpx)}"
+        "50%%{transform:translate(%dpx,%.1fpx)}}"
+        % (index + 1, dx, dy, dx, dy - rise),
+        # Gone the instant they have him. Four ghosts piled on the last cell
+        # cover him completely, and the death is the thing worth watching --
+        # in the arcade the screen clears and he dies alone too.
+        "@keyframes haunt%d{0%%,%.3f%%{opacity:0}%.3f%%,%.1f%%{opacity:1}"
+        "%.1f%%,100%%{opacity:0}}"
+        % (index + 1, appears, appears + 0.01, CAUGHT * 100 - 0.6,
+           CAUGHT * 100),
+    ]))
 
 
 def facing(corners, steps):
@@ -189,37 +232,67 @@ def facing(corners, steps):
         # Two keyframes a hair apart make the flip a jump rather than a spin.
         frames.append("%.3f%%,%.3f%%{transform:rotate(%ddeg)}"
                       % (start, percent(corners[index + 1][0], steps), angle))
+    # Holding the last angle to 100% for the same reason the cells hold their
+    # opacity: an absent final keyframe is filled in from the property's own
+    # value, and he would rotate back to facing right while being eaten.
+    frames.append("100%%{transform:rotate(%ddeg)}"
+                  % (0 if (ROWS - 1) % 2 == 0 else 180))
     return "@keyframes facing{%s}" % "".join(frames)
 
 
-def sprite():
-    """Pac-Man as two jaws, so the mouth is a rotation and nothing else.
+RADIUS = 6.4
+# A circle stroked with a width equal to its diameter reads as a disc, and then
+# stroke-dasharray can take angular bites out of it. Drawn on a path of half
+# the radius so the stroke spans the whole of it.
+RING = 2 * 3.141592653589793 * (RADIUS / 2)
 
-    A wedge cut out of a circle cannot be drawn with plain shapes, but two half
-    discs hinged at the centre make the same silhouette and only need a
-    rotation each -- which CSS animates reliably inside an <img>.
+
+def sprite():
+    """Pac-Man twice: the one that chews, and the one that dies.
+
+    Chewing is two half discs hinged at the centre -- a wedge cut from a circle
+    is not a shape CSS can animate, but two halves swung apart leave exactly
+    that silhouette and need only a rotation each.
+
+    The arcade death is a different problem: the mouth opens past a half circle
+    and keeps going until nothing is left, which those two halves cannot do --
+    swing them a full 180 degrees and they have merely swapped places and
+    closed up again. So the dying Pac-Man is a second sprite, a disc drawn as a
+    thick stroke whose dasharray shrinks to nothing, with the gap centred on
+    the mouth. Two sprites rather than one also keeps the fast chew and the
+    once-a-loop death off the same property, where the longer animation would
+    simply overrule the shorter one.
     """
-    radius = 6.4
     top = ("M0,0 L%.1f,0 A%.1f,%.1f 0 0 0 %.1f,0 Z"
-           % (radius, radius, radius, -radius))
+           % (RADIUS, RADIUS, RADIUS, -RADIUS))
     bottom = ("M0,0 L%.1f,0 A%.1f,%.1f 0 0 1 %.1f,0 Z"
-              % (radius, radius, radius, -radius))
+              % (RADIUS, RADIUS, RADIUS, -RADIUS))
+    spokes = "".join(
+        '<line x1="0" y1="-3.4" x2="0" y2="-8.4" transform="rotate(%d)"/>'
+        % (angle,) for angle in range(0, 360, 60))
     return ('<g class="pac"><g class="facing">'
+            '<g class="alive">'
             '<path class="jaw top" d="%s" fill="%s"/>'
-            '<path class="jaw bottom" d="%s" fill="%s"/>'
-            '</g></g>' % (top, PACMAN, bottom, PACMAN))
+            '<path class="jaw bottom" d="%s" fill="%s"/></g>'
+            '<circle class="death" cx="0" cy="0" r="%.2f" fill="none" '
+            'stroke="%s" stroke-width="%.1f"/>'
+            '<g class="burst" stroke="%s" stroke-width="1.6" '
+            'stroke-linecap="round">%s</g>'
+            '</g></g>'
+            % (top, PACMAN, bottom, PACMAN, RADIUS / 2, PACMAN, RADIUS,
+               PACMAN, spokes))
 
 
 def ghost(index, colour):
     """A ghost: domed head, four-scallop skirt, eyes that keep looking ahead."""
     body = ("M-6,3 L-6,-1 A6,6 0 0 1 6,-1 L6,3 "
             "L4.5,4.5 L3,3 L1.5,4.5 L0,3 L-1.5,4.5 L-3,3 L-4.5,4.5 Z")
-    return ('<g class="g%d"><path d="%s" fill="%s"/>'
+    return ('<g class="g%d"><g class="bob%d"><path d="%s" fill="%s"/>'
             '<circle cx="-2.4" cy="-1.2" r="2" fill="#FFFFFF"/>'
             '<circle cx="2.4" cy="-1.2" r="2" fill="#FFFFFF"/>'
             '<circle cx="-1.7" cy="-1.2" r="1" fill="#2B3A55"/>'
-            '<circle cx="3.1" cy="-1.2" r="1" fill="#2B3A55"/></g>'
-            % (index, body, colour))
+            '<circle cx="3.1" cy="-1.2" r="1" fill="#2B3A55"/></g></g>'
+            % (index, index, body, colour))
 
 
 def draw(weeks, theme):
@@ -231,17 +304,40 @@ def draw(weeks, theme):
     height = MARGIN * 2 + ROWS * PITCH - GAP
 
     pac_rule, route_frames = mover("pac", corners, steps, 0)
-    ghost_rules = [mover("g%d" % (index + 1), corners, steps, trail)[0]
-                   for index, trail in enumerate(TRAILS)]
+    ghost_rules = [
+        mover("g%d" % (index + 1), corners, steps, trail,
+              "ease-in-out" if index in EASED else "linear")[0]
+        for index, trail in enumerate(TRAILS)]
+    ghost_rules += [haunting(index, trail)
+                    for index, trail in enumerate(TRAILS)]
 
     style = [
         # Every animated group is positioned by transform, so they all need the
         # same origin: the sprite is drawn around 0,0 and moved to the cell.
-        ".pac,.facing,.jaw,.g1,.g2,.g3,.g4"
+        ".pac,.facing,.jaw,.burst,.g1,.g2,.g3,.g4,.bob1,.bob2,.bob3,.bob4"
         "{transform-box:view-box;transform-origin:0 0}",
         pac_rule,
         route_frames,
         "\n".join(ghost_rules),
+        # Caught at the last cell, with every ghost piled on top of him: the
+        # chewing sprite is swapped for the dying one, and the mouth keeps
+        # opening until the disc has been eaten away entirely.
+        ".alive{animation:alive %.1fs linear infinite}" % LOOP,
+        "@keyframes alive{0%%,%.2f%%{opacity:1}%.2f%%,100%%{opacity:0}}"
+        % (CAUGHT * 100 - 0.1, CAUGHT * 100),
+        ".death{animation:death %.1fs linear infinite}" % LOOP,
+        "@keyframes death{0%%,%.2f%%{stroke-dasharray:%.2f 0;"
+        "stroke-dashoffset:0;opacity:0}"
+        "%.2f%%{stroke-dasharray:%.2f 0;stroke-dashoffset:0;opacity:1}"
+        "%.1f%%,100%%{stroke-dasharray:0 %.2f;stroke-dashoffset:%.2f;"
+        "opacity:1}}"
+        % (CAUGHT * 100 - 0.1, RING, CAUGHT * 100, RING, GONE * 100, RING,
+           -RING / 2),
+        ".burst{animation:burst %.1fs linear infinite}" % LOOP,
+        "@keyframes burst{0%%,%.1f%%{opacity:0;transform:scale(0.2)}"
+        "%.1f%%{opacity:1;transform:scale(0.9)}"
+        "%.1f%%,100%%{opacity:0;transform:scale(1.8)}}"
+        % (GONE * 100 - 0.1, GONE * 100 + 0.6, GONE * 100 + 2.6),
         ".facing{animation:facing %.1fs linear infinite}" % LOOP,
         facing(corners, steps),
         ".jaw{animation:chew %.2fs ease-in-out infinite}" % JAWS,

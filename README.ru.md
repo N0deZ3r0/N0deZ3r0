@@ -140,12 +140,8 @@ hash of your email" instead of base64
 <br/>
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/languages-light.svg" />
-  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/languages-dark.svg" alt="языки по репозиториям" />
-</picture>
-<picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/hours-light.svg" />
-  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/hours-dark.svg" alt="коммиты по часам" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/insight-light.svg" />
+  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/insight-dark.svg" alt="языки по репозиториям и коммиты по часам" />
 </picture>
 
 <br/>

@@ -8,13 +8,18 @@ GitHub's image proxy caches it like any other image and the word ERROR can sit
 on the profile after the service itself has recovered. Drawing the cards here
 removes the whole failure mode: nothing is fetched when the page is viewed.
 
-Four cards, each in a light and a dark variant, written to a directory the
+Three cards, each in a light and a dark variant, written to a directory the
 workflow then force-pushes to a branch of its own:
 
-    overview   contributions, commits, pull requests, repositories
-    languages  how many repositories lead with each language
-    hours      commits by hour of day, in the account's own timezone
-    streak     total, current run of days, longest run of days
+    overview  contributions, commits, pull requests, repositories
+    insight   which language each repository leads with, and the hours of the
+              day the commits land in
+    streak    total, current run of days, longest run of days
+
+All three are the same width on purpose. The README column on a profile is
+narrower than it looks -- 652px at an ordinary window size -- so cards built to
+sit side by side do not, and drop into a row of their own at half the width of
+their neighbours. Cards of one width scale together whatever the column does.
 
 Everything comes from one GraphQL call plus one paginated call per repository,
 using only the standard library, so the job needs no install step.
@@ -23,8 +28,8 @@ A note on what the numbers mean. The default job token sees public
 contributions only, which is what a visitor to the profile sees as well, so the
 cards agree with the page around them. A personal token with `read:user` in
 ACTIVITY_TOKEN widens every count to include private work -- the same choice
-snake.yml already offers, and it has to be made the same way in both places, or
-the two pictures would be counting different years.
+pacman.yml offers, and it has to be made the same way in both places, or the
+numbers and the board beneath them would be counting different years.
 """
 
 import datetime
@@ -57,7 +62,7 @@ THEMES = {
 }
 
 WIDE = (852, 168)
-SMALL = (420, 200)
+INSIGHT = (852, 200)
 
 PROFILE = """
 query($login: String!) {
@@ -242,11 +247,12 @@ def overview(summary, theme):
     return frame(WIDE, theme, "Activity over the last 12 months", parts)
 
 
-def languages(ranked, theme):
-    parts = [text(24, 34, "Top languages by repo", 13, theme["muted"], "600",
-                  "start")]
+def languages(ranked, theme, origin):
+    """The left half of the insight card: a donut and its legend."""
+    parts = [text(origin + 28, 36, "Top languages by repo", 13, theme["muted"],
+                  "600", "start")]
     total = sum(count for _, count, _ in ranked) or 1
-    cx, cy, radius = 322, 116, 50
+    cx, cy, radius = origin + 336, 122, 50
     # A donut is one circle per slice with a dashed stroke: each dash is as
     # long as that slice's share of the circumference, pushed round by
     # everything already drawn.
@@ -261,33 +267,52 @@ def languages(ranked, theme):
                         circumference - length, -offset, cx, cy))
         offset += length
     for index, (name, count, colour) in enumerate(ranked):
-        y = 80 + index * 26
-        parts.append('<rect x="24" y="%d" width="11" height="11" rx="2" '
-                     'fill="%s"/>' % (y - 10, colour or theme["accent"]))
-        parts.append(text(44, y, name, 14, theme["text"], "400", "start"))
-        parts.append(text(232, y, "%d%%" % round(100.0 * count / total), 14,
+        y = 84 + index * 26
+        parts.append('<rect x="%d" y="%d" width="11" height="11" rx="2" '
+                     'fill="%s"/>'
+                     % (origin + 28, y - 10, colour or theme["accent"]))
+        parts.append(text(origin + 48, y, name, 14, theme["text"], "400",
+                          "start"))
+        parts.append(text(origin + 240, y,
+                          "%d%%" % round(100.0 * count / total), 14,
                           theme["muted"], "400", "end"))
-    return frame(SMALL, theme, "Top languages by repository", parts)
+    return parts
 
 
-def hours_card(hours, theme):
+def hours(counts, theme, origin):
+    """The right half of the insight card: a bar per hour of the day."""
     label = "Commits by hour (UTC%+d)" % OFFSET
-    parts = [text(24, 34, label, 13, theme["muted"], "600", "start")]
-    peak = max(hours) or 1
-    base, top, left, right = 168, 62, 26, 394
+    parts = [text(origin + 28, 36, label, 13, theme["muted"], "600", "start")]
+    peak = max(counts) or 1
+    base, top = 170, 66
+    left, right = origin + 30, origin + 398
     step = (right - left) / 24.0
-    busiest = hours.index(max(hours))
-    for hour, count in enumerate(hours):
-        height = (base - top) * count / float(peak)
+    busiest = counts.index(max(counts))
+    for hour, count in enumerate(counts):
+        height = max((base - top) * count / float(peak), 1.5)
         parts.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" '
                      'rx="2" fill="%s"/>'
-                     % (left + hour * step, base - max(height, 1.5),
-                        step - 4, max(height, 1.5),
+                     % (left + hour * step, base - height, step - 4, height,
                         theme["accent"] if hour == busiest else theme["dim"]))
     for hour in (0, 6, 12, 18):
-        parts.append(text(left + hour * step + (step - 4) / 2, 186,
+        parts.append(text(left + hour * step + (step - 4) / 2, 188,
                           "%02d" % hour, 11, theme["muted"]))
-    return frame(SMALL, theme, label, parts)
+    return parts
+
+
+def insight(ranked, counts, theme):
+    """Languages and hours in one card.
+
+    They were two cards until the profile was measured: the README column is
+    652px wide there, so a pair of 420px cards will not sit side by side and
+    drops into a second row, half the width of the cards above and below it.
+    One wide card scales as a unit and lines up with them at any column width.
+    """
+    half = INSIGHT[0] / 2.0
+    parts = languages(ranked, theme, 0) + hours(counts, theme, int(half))
+    parts.append('<line x1="%.1f" y1="30" x2="%.1f" y2="172" stroke="%s"/>'
+                 % (half, half, theme["border"]))
+    return frame(INSIGHT, theme, "Top languages, and commits by hour", parts)
 
 
 def streak_card(run, total, first_day, theme):
@@ -345,7 +370,8 @@ def main():
     today = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
     repositories = data["repositories"]
     names = [repo["name"] for repo in repositories["nodes"]]
-    hours, counted = commit_hours(names, days[0]["date"] + "T00:00:00Z")
+    by_hour, counted = commit_hours(names,
+                                    days[0]["date"] + "T00:00:00Z")
     if not counted:
         sys.exit("no commits found in the window, refusing to draw a card")
 
@@ -374,8 +400,7 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     for name, theme in THEMES.items():
         cards = {"overview": overview(summary, theme),
-                 "languages": languages(ranked, theme),
-                 "hours": hours_card(hours, theme),
+                 "insight": insight(ranked, by_hour, theme),
                  "streak": streak_card(run, calendar["totalContributions"],
                                        first, theme)}
         for card, svg in cards.items():
@@ -386,7 +411,7 @@ def main():
           % (calendar["totalContributions"],
              collection["totalCommitContributions"], run["current"],
              run["longest"], counted))
-    print("wrote 8 files to %s/" % OUT)
+    print("wrote 6 files to %s/" % OUT)
 
 
 if __name__ == "__main__":
