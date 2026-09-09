@@ -41,8 +41,18 @@ ROWS = 7
 LOOP = 36.0        # seconds end to end: sweep, then the ghosts catch him
 MOVING = 0.80      # the share of the loop spent eating
 CAUGHT = 0.865     # they have all arrived by here, and he dies
-GONE = 0.94        # dead; the board sits empty until the loop restarts
+GONE = 0.915       # dead; the board sits empty until the loop restarts
 JAWS = 0.34        # one open-and-shut
+
+# Four energizers, spaced along the route rather than dropped in the corners
+# the arcade uses: corners here would fire one at the very first cell and one
+# at the very last, and the point of them is that the chase changes character
+# four times over the run. Each is snapped to the nearest day with nothing on
+# it, so no contribution square is overwritten to make room for one.
+ENERGIZERS = (0.15, 0.38, 0.61, 0.84)
+SCARED_FOR = 3.6   # seconds the ghosts stay blue after one is eaten
+FLASH_FOR = 1.2    # the tail of that, spent flashing white
+FLASH_EVERY = 0.3
 
 # How far behind Pac-Man each ghost runs. Deliberately uneven: evenly spaced
 # trails read as one train rather than four things chasing him. The two given
@@ -59,15 +69,23 @@ BOBS = ((1.05, 3.0, -3, 0), (1.35, 4.0, 3, -1), (0.90, 2.5, -1, 2),
 # GitHub's own two palettes, so the graph looks like the graph it is drawn from.
 THEMES = {
     "light": {"bg": "#FFFFFF", "empty": "#EBEDF0", "pellet": "#D8DEE4",
+              "power": "#E09B54",
               "levels": ["#EBEDF0", "#9BE9A8", "#40C463", "#30A14E",
                          "#216E39"]},
     "dark": {"bg": "#0D1117", "empty": "#161B22", "pellet": "#30363D",
+             "power": "#FFB897",
              "levels": ["#161B22", "#0E4429", "#006D32", "#26A641",
                         "#39D353"]},
 }
 
 PACMAN = "#FFD534"
-GHOSTS = ("#FF4B4B", "#FFB8DE", "#57DFFF", "#FFB852")
+# The arcade four, by their own colours: Blinky, Pinky, Inky, Clyde.
+GHOSTS = ("#FF0000", "#FFB8FF", "#00FFFF", "#FFB852")
+PUPIL = "#2121DE"
+SCARED = "#2121DE"      # the blue they turn when an energizer goes
+SCARED_TRIM = "#FFFFFF"
+FLASHED = "#FFFFFF"     # and the white they blink before it wears off
+FLASHED_TRIM = "#FF0000"
 
 LEVELS = {"NONE": 0, "FIRST_QUARTILE": 1, "SECOND_QUARTILE": 2,
           "THIRD_QUARTILE": 3, "FOURTH_QUARTILE": 4}
@@ -139,14 +157,96 @@ def percent(step, steps):
     return step / float(steps) * MOVING * 100.0
 
 
-def cells(weeks, theme, steps, order):
-    """The board, plus the keyframes that take each cell off it."""
+def held(segments, default):
+    """Keyframes holding a value across each segment and `default` elsewhere.
+
+    Every one of them ends at 100%. An absent final keyframe is not simply the
+    last value carried over -- the browser fills one in from the property's own
+    value, and the animation drifts back towards it across whatever is left of
+    the loop.
+    """
+    frames = ["0%%{opacity:%d}" % default]
+    for start, end, value in segments:
+        frames.append("%.4f%%{opacity:%d}%.4f%%{opacity:%d}"
+                      "%.4f%%{opacity:%d}%.4f%%{opacity:%d}"
+                      % (max(start - 0.005, 0.0), default, start, value,
+                         end, value, min(end + 0.005, 100.0), default))
+    frames.append("100%%{opacity:%d}" % default)
+    return "".join(frames)
+
+
+def fright(powered, steps):
+    """The three states a ghost is in, as one set of shared keyframes.
+
+    All four turn at once, so the timing is the same for every ghost and none
+    of these carry the phase shift their routes do.
+    """
+    span = SCARED_FOR / LOOP * 100.0
+    flash = FLASH_FOR / LOOP * 100.0
+    beat = FLASH_EVERY / LOOP * 100.0
+
+    windows = [(percent(step, steps), percent(step, steps) + span)
+               for step in sorted(powered.values())]
+    pulses = []
+    for _, end in windows:
+        moment, lit = end - flash, True
+        while moment < end - 0.001:
+            if lit:
+                pulses.append((moment, min(moment + beat, end)))
+            moment += beat
+            lit = not lit
+
+    return ("@keyframes calm{%s}@keyframes scared{%s}@keyframes blink{%s}"
+            % (held([(start, end, 0) for start, end in windows], 1),
+               held([(start, end, 1) for start, end in windows], 0),
+               held([(start, end, 1) for start, end in pulses], 0)))
+
+
+def looking(corners, steps):
+    """Ghost pupils lean the way the ghost is travelling."""
+    frames = []
+    for index in range(0, len(corners), 2):
+        shift = 1.2 if corners[index][2] % 2 == 0 else -1.2
+        frames.append("%.3f%%,%.3f%%{transform:translate(%.1fpx,0)}"
+                      % (percent(corners[index][0], steps),
+                         percent(corners[index + 1][0], steps), shift))
+    frames.append("100%%{transform:translate(%.1fpx,0)}"
+                  % (1.2 if (ROWS - 1) % 2 == 0 else -1.2))
+    return "@keyframes looking{%s}" % "".join(frames)
+
+
+def board(weeks):
+    """Contribution level per (column, row); missing where the calendar has no
+    such day, which happens at both ends because it arrives in whole weeks."""
     filled = {}
     for column, week in enumerate(weeks):
         for day in week["contributionDays"]:
             filled[(column, day["weekday"])] = LEVELS.get(
                 day["contributionLevel"], 0)
+    return filled
 
+
+def energizers(order, filled):
+    """Pick the four energizer cells, and say when each is eaten.
+
+    Only days with nothing on them are eligible, so the graph keeps every one
+    of its squares; an energizer replaces a pellet, never a contribution.
+    """
+    empty = [cell for cell in order if filled.get((cell[1], cell[2])) == 0]
+    chosen = {}
+    if not empty:
+        return chosen
+    last = order[-1][0]
+    for fraction in ENERGIZERS:
+        target = fraction * last
+        pick = min(empty, key=lambda cell: abs(cell[0] - target))
+        empty.remove(pick)
+        chosen[(pick[1], pick[2])] = pick[0]
+    return chosen
+
+
+def cells(theme, steps, order, filled, powered):
+    """The board, plus the keyframes that take each cell off it."""
     shapes = []
     rules = []
     for step, column, row in order:
@@ -156,7 +256,15 @@ def cells(weeks, theme, steps, order):
         x, y = centre(column, row)
         eaten = percent(step, steps)
         name = "e%d_%d" % (column, row)
-        if level:
+        if (column, row) in powered:
+            # The blink is on the circle and the eating is on the group around
+            # it. Both are opacity, and one element can only be told once what
+            # its opacity does -- the longer animation would simply overrule
+            # the blink. Nested, the two multiply instead of competing.
+            shapes.append('<g class="%s"><circle class="power" cx="%.1f" '
+                          'cy="%.1f" r="3.4" fill="%s"/></g>'
+                          % (name, x, y, theme["power"]))
+        elif level:
             shapes.append('<rect class="%s" x="%.1f" y="%.1f" width="%d" '
                           'height="%d" rx="2" fill="%s"/>'
                           % (name, x - CELL / 2.0, y - CELL / 2.0, CELL, CELL,
@@ -232,11 +340,15 @@ def facing(corners, steps):
         # Two keyframes a hair apart make the flip a jump rather than a spin.
         frames.append("%.3f%%,%.3f%%{transform:rotate(%ddeg)}"
                       % (start, percent(corners[index + 1][0], steps), angle))
-    # Holding the last angle to 100% for the same reason the cells hold their
-    # opacity: an absent final keyframe is filled in from the property's own
-    # value, and he would rotate back to facing right while being eaten.
-    frames.append("100%%{transform:rotate(%ddeg)}"
-                  % (0 if (ROWS - 1) % 2 == 0 else 180))
+    # Cornered, he turns to face up, which is the position the arcade death is
+    # drawn from. Holding the angle to 100% afterwards matters for the same
+    # reason the cells hold their opacity: an absent final keyframe is filled
+    # in from the property's own value, and he would swing back to facing right
+    # while being eaten.
+    last = 0 if (ROWS - 1) % 2 == 0 else 180
+    frames.append("%.3f%%{transform:rotate(%ddeg)}"
+                  % (CAUGHT * 100 - 1.2, last))
+    frames.append("%.3f%%,100%%{transform:rotate(-90deg)}" % (CAUGHT * 100))
     return "@keyframes facing{%s}" % "".join(frames)
 
 
@@ -283,22 +395,51 @@ def sprite():
                PACMAN, spokes))
 
 
+GHOST_BODY = ("M-6,3 L-6,-1 A6,6 0 0 1 6,-1 L6,3 "
+              "L4.5,4.5 L3,3 L1.5,4.5 L0,3 L-1.5,4.5 L-3,3 L-4.5,4.5 Z")
+
+
+def afraid(fill, trim, name):
+    """The blue ghost, and the white one it blinks into as the fright runs out.
+
+    Square eyes and a zigzag for a mouth: at this size that pair is the whole
+    difference between a ghost that is chasing and a ghost that is running, and
+    it is the difference the arcade draws too.
+    """
+    return ('<g class="%s"><path d="%s" fill="%s"/>'
+            '<rect x="-3.1" y="-2.2" width="1.8" height="1.8" fill="%s"/>'
+            '<rect x="1.3" y="-2.2" width="1.8" height="1.8" fill="%s"/>'
+            '<path d="M-3.6,2 L-2.4,0.9 L-1.2,2 L0,0.9 L1.2,2 L2.4,0.9 '
+            'L3.6,2" fill="none" stroke="%s" stroke-width="0.9"/></g>'
+            % (name, GHOST_BODY, fill, trim, trim, trim))
+
+
 def ghost(index, colour):
-    """A ghost: domed head, four-scallop skirt, eyes that keep looking ahead."""
-    body = ("M-6,3 L-6,-1 A6,6 0 0 1 6,-1 L6,3 "
-            "L4.5,4.5 L3,3 L1.5,4.5 L0,3 L-1.5,4.5 L-3,3 L-4.5,4.5 Z")
-    return ('<g class="g%d"><g class="bob%d"><path d="%s" fill="%s"/>'
+    """A ghost, in its three states, stacked and cross-faded by opacity.
+
+    Three sprites rather than one recoloured sprite: a ghost that is merely
+    tinted blue still has round eyes looking where it is going, which is the
+    opposite of what a frightened one does.
+    """
+    return ('<g class="g%d"><g class="bob%d">'
+            '<g class="calm"><path d="%s" fill="%s"/>'
             '<circle cx="-2.4" cy="-1.2" r="2" fill="#FFFFFF"/>'
             '<circle cx="2.4" cy="-1.2" r="2" fill="#FFFFFF"/>'
-            '<circle cx="-1.7" cy="-1.2" r="1" fill="#2B3A55"/>'
-            '<circle cx="3.1" cy="-1.2" r="1" fill="#2B3A55"/></g></g>'
-            % (index, index, body, colour))
+            '<g class="look%d">'
+            '<circle cx="-2.4" cy="-1.2" r="1" fill="%s"/>'
+            '<circle cx="2.4" cy="-1.2" r="1" fill="%s"/></g></g>'
+            '%s%s</g></g>'
+            % (index, index, GHOST_BODY, colour, index, PUPIL, PUPIL,
+               afraid(SCARED, SCARED_TRIM, "scared"),
+               afraid(FLASHED, FLASHED_TRIM, "blink")))
 
 
 def draw(weeks, theme):
     columns = len(weeks)
     order, corners, steps = route(columns)
-    shapes, rules = cells(weeks, theme, steps, order)
+    filled = board(weeks)
+    powered = energizers(order, filled)
+    shapes, rules = cells(theme, steps, order, filled, powered)
 
     width = MARGIN * 2 + columns * PITCH - GAP
     height = MARGIN * 2 + ROWS * PITCH - GAP
@@ -314,7 +455,8 @@ def draw(weeks, theme):
     style = [
         # Every animated group is positioned by transform, so they all need the
         # same origin: the sprite is drawn around 0,0 and moved to the cell.
-        ".pac,.facing,.jaw,.burst,.g1,.g2,.g3,.g4,.bob1,.bob2,.bob3,.bob4"
+        ".pac,.facing,.jaw,.burst,.g1,.g2,.g3,.g4,.bob1,.bob2,.bob3,.bob4,"
+        ".look1,.look2,.look3,.look4"
         "{transform-box:view-box;transform-origin:0 0}",
         pac_rule,
         route_frames,
@@ -346,6 +488,21 @@ def draw(weeks, theme):
         "50%{transform:rotate(-32deg)}}",
         "@keyframes chew-down{0%,100%{transform:rotate(0)}"
         "50%{transform:rotate(32deg)}}",
+        # An energizer goes, and for a few seconds the ghosts are the ones
+        # being chased: blue, then blinking white as it wears off.
+        ".calm{animation:calm %.1fs linear infinite}"
+        ".scared{animation:scared %.1fs linear infinite}"
+        ".blink{animation:blink %.1fs linear infinite}" % (LOOP, LOOP, LOOP),
+        fright(powered, steps),
+        # steps(1,end) rather than a fade: an energizer in the arcade is on or
+        # it is off, and a pellet that breathes reads as a glow instead.
+        ".power{animation:pulse 0.5s steps(1,end) infinite}",
+        "@keyframes pulse{0%,49%{opacity:1}50%,100%{opacity:0.15}}",
+        "\n".join(".look%d{animation:looking %.1fs linear infinite;"
+                  "animation-delay:%.2fs}" % (index + 1, LOOP,
+                                              -(LOOP - trail))
+                  for index, trail in enumerate(TRAILS)),
+        looking(corners, steps),
         "\n".join(rules),
     ]
 
