@@ -1,0 +1,69 @@
+name: Activity
+
+# Draws the Activity cards from this account's own data and publishes them to
+# the `cards` branch. The README points at that branch, so nothing is fetched
+# from anyone else's server while the profile is being read.
+#
+# The cards this replaces came from a free shared service. When its API budget
+# ran out it answered with a picture reading ERROR, sent as HTTP 200 -- which
+# GitHub's image proxy caches like any other image, so the word ERROR could
+# outlive the outage that caused it. Drawing them here removes the dependency
+# rather than papering over it.
+#
+# This job and Pacman own one branch each. They would otherwise force-push over
+# each other, since each replaces its branch wholesale.
+
+on:
+  schedule:
+    # Daily, at an off-peak minute so the run is not queued behind the crowd.
+    - cron: '23 4 * * *'
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: activity
+  cancel-in-progress: true
+
+jobs:
+  render:
+    name: Draw and publish
+    runs-on: ubuntu-latest
+
+    steps:
+      # Pinned to the commit behind v7.0.1 rather than a moving tag: a tag can
+      # be repointed at new code, and this job runs with write access.
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Draw the cards
+        env:
+          # The default job token sees the public calendar only, which is also
+          # what a visitor to the profile sees, so the cards and the page agree.
+          # A personal token with `read:user` in ACTIVITY_TOKEN widens the
+          # counts to include private work -- the same switch pacman.yml has,
+          # and it has to be thrown in both places or the numbers and the
+          # picture would be describing different years.
+          GITHUB_TOKEN: ${{ secrets.ACTIVITY_TOKEN || github.token }}
+          GITHUB_OWNER: ${{ github.repository_owner }}
+          OUTPUT_DIR: dist
+          UTC_OFFSET: '3'
+        run: python3 .github/scripts/render_activity.py
+
+      - name: Publish to the cards branch
+        run: |
+          set -euo pipefail
+          cd dist
+          git init --quiet --initial-branch=cards
+          git config user.name  'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .
+          git commit --quiet -m 'Redraw the activity cards'
+          # The branch holds nothing but these generated files, so replacing its
+          # history each run is intended.
+          git push --force --quiet \
+            "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" \
+            cards

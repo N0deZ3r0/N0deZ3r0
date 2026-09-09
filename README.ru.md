@@ -133,33 +133,33 @@ hash of your email" instead of base64
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=N0deZ3r0&theme=default" />
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=N0deZ3r0&theme=github_dark" alt="сводка профиля" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/overview-light.svg" />
+  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/overview-dark.svg" alt="активность за последние 12 месяцев" />
 </picture>
 
 <br/>
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=N0deZ3r0&theme=default" />
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=N0deZ3r0&theme=github_dark" alt="языки по репозиториям" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/languages-light.svg" />
+  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/languages-dark.svg" alt="языки по репозиториям" />
 </picture>
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=N0deZ3r0&theme=default&utcOffset=3" />
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=N0deZ3r0&theme=github_dark&utcOffset=3" alt="продуктивное время" />
-</picture>
-
-<br/>
-
-<picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://streak-stats.demolab.com?user=N0deZ3r0&hide_border=true&background=FFFFFF&stroke=D0D7DE&ring=0969DA&fire=8250DF&currStreakLabel=0969DA&sideLabels=57606A&dates=6E7681&currStreakNum=1F2328&sideNums=1F2328" />
-  <img src="https://streak-stats.demolab.com?user=N0deZ3r0&hide_border=true&background=0D1117&stroke=21262D&ring=58A6FF&fire=8957E5&currStreakLabel=58A6FF&sideLabels=8B949E&dates=6E7681&currStreakNum=C9D1D9&sideNums=C9D1D9" alt="стрик" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/hours-light.svg" />
+  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/hours-dark.svg" alt="коммиты по часам" />
 </picture>
 
 <br/>
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/output/snake-light.svg" />
-  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/output/snake-dark.svg" alt="график контрибьюшенов" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/streak-light.svg" />
+  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/streak-dark.svg" alt="стрик контрибьюшенов" />
+</picture>
+
+<br/>
+
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/output/pacman-light.svg" />
+  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/output/pacman-dark.svg" alt="график контрибьюшенов в виде игры в пакмана" />
 </picture>
 
 </div>
