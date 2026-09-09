@@ -160,22 +160,6 @@ hash of your email" instead of base64
 
 </div>
 
-## Поиграть
-
-Лабиринт — это календарь: день с работой становится стеной, пустой день — коридором
-с точкой, так что доска перерисовывается сама по мере того, как заполняется год.
-[Напишите направление в issue](https://github.com/N0deZ3r0/N0deZ3r0/issues/1) — `влево`, `вправо`, `вверх`, `вниз` — и пакман
-сделает ход. Счёт общий на всех.
-
-<div align="center">
-
-<picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/game/board-light.svg" />
-  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/game/board-dark.svg" alt="живая игровая доска" />
-</picture>
-
-</div>
-
 ---
 
 <div align="center">
