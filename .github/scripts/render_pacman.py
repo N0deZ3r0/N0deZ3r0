@@ -15,7 +15,7 @@ where scripts never run, so nothing can be decided in the browser. CSS
 animation does run there, so every move leaves here as a @keyframes rule and
 the browser only interpolates between positions settled long before.
 
-Five lives rather than one, and the cherries stay eaten across them, so a loop
+Five lives rather than one, and the pellets stay eaten across them, so a loop
 holds five different games on a board that is emptier each time instead of the
 same death in the same corner forever. Which five depends on the date, so the
 board is playing a different match tomorrow.
@@ -555,22 +555,23 @@ def sprite():
 
 
 def cherry(theme):
-    """The one cherry every corridor holds a copy of.
+    """The cherry that stands in for an energizer, four to a board.
 
-    Described once in a defs block and pointed at by every cell, so three
-    hundred of them cost a reference each instead of a drawing each -- which
-    is how the board came out smaller as cherries than it was as dots. Drawn
-    around its own origin, because <use> places a copy by translating it.
+    Described once in a defs block and pointed at by each of the four, which
+    is also why it can be drawn properly: a fruit is a fiddly little thing to
+    put in a ten-pixel cell, and the cost is paid once. Drawn around its own
+    origin, because <use> places a copy by translating it.
     """
-    # Drawn at about half the size a cherry wants to be. At full size three
-    # hundred of them are a wall of red and the contribution graph underneath
-    # -- the thing the board is made of -- stops being readable at all.
-    return ('<defs><g id="ch" transform="scale(.58)">'
+    return ('<defs><g id="ch">'
             '<path d="M-1.9,-0.4 Q-1.3,-3.3 0.2,-3.5 Q1.7,-3.3 1.9,-0.4" '
-            'fill="none" stroke="%s" stroke-width="1.1" '
+            'fill="none" stroke="%s" stroke-width="0.8" '
             'stroke-linecap="round"/>'
-            '<circle cx="-1.9" cy="1.4" r="2.1" fill="%s"/>'
-            '<circle cx="1.9" cy="1.4" r="2.1" fill="%s"/></g></defs>'
+            '<circle cx="-1.9" cy="1.5" r="2.1" fill="%s"/>'
+            '<circle cx="1.9" cy="1.5" r="2.1" fill="%s"/>'
+            '<circle cx="-2.5" cy="0.9" r="0.6" fill="#FFFFFF" '
+            'opacity=".5"/>'
+            '<circle cx="1.3" cy="0.9" r="0.6" fill="#FFFFFF" '
+            'opacity=".5"/></g></defs>'
             % (theme["stem"], theme["berry"], theme["berry"]))
 
 
@@ -654,15 +655,16 @@ def draw(show, level, columns, theme):
         if cell not in show["walkable"]:
             continue
         if cell in show["powers"]:
-            shapes.append('<g class="%s"><circle class="power" cx="%.1f" '
-                          'cy="%.1f" r="3.4" fill="%s"/></g>'
-                          % (name, x, y, theme["power"]))
+            # The one worth crossing the board for. Two classes on two nested
+            # elements because both are opacity: the cherry blinks where it
+            # lies, the group around it is what takes it off the board when he
+            # gets there, and one element cannot be told twice what its
+            # opacity does.
+            shapes.append('<g class="%s"><use class="power" href="#ch" '
+                          'x="%d" y="%d"/></g>' % (name, round(x), round(y)))
         else:
-            # One cherry described once and referenced 300 times: a <use> is
-            # shorter than the circle it replaces, so the board costs less to
-            # send than it did as dots.
-            shapes.append('<use class="%s" href="#ch" x="%d" y="%d"/>'
-                          % (name, round(x), round(y)))
+            shapes.append('<circle class="%s" cx="%.1f" cy="%.1f" r="1.6" '
+                          'fill="%s"/>' % (name, x, y, theme["pellet"]))
         when = eaten_at.get(cell)
         if when is None:
             continue
