@@ -6,7 +6,7 @@ wall, an empty day is a corridor with a pellet in it. So the maze is a year of
 this account's history and it rearranges itself as the year fills in, without
 anyone designing a level.
 
-Nobody is playing. Five whole lives are played out here, when the SVG is built
+Nobody is playing. Three whole lives are played out here, when the SVG is built
 -- Pac-Man looking for the nearest pellet and backing off when something is
 close, four ghosts with four different amounts of patience, energizers, a
 chase, and the death that ends each life -- and what ships is the recording.
@@ -15,10 +15,10 @@ where scripts never run, so nothing can be decided in the browser. CSS
 animation does run there, so every move leaves here as a @keyframes rule and
 the browser only interpolates between positions settled long before.
 
-Five lives rather than one, and the pellets stay eaten across them, so a loop
-holds five different games on a board that is emptier each time instead of the
-same death in the same corner forever. Which five depends on the date, so the
-board is playing a different match tomorrow.
+Three lives rather than one, and the pellets stay eaten across them, so a loop
+holds three different games on a board that is emptier each time instead of the
+same death in the same corner forever. The seed is fresh on every build, so no
+two rebuilds are the same match.
 """
 
 import datetime
@@ -45,19 +45,19 @@ DEATH_FOR = 1.3    # the mouth opening all the way round
 REST_FOR = 0.5     # a beat before the next life starts
 PAUSE_FOR = 1.3    # and a longer one on the last, before the loop restarts
 
-LIVES = 5
-SHORTEST = 40      # a life below this is not worth watching
-LONGEST = 70       # above this, five of them will not fit
-BUDGET = 320       # total moves in a loop, which is most of the file size
+LIVES = 3
+SHORTEST = 90      # a life below this is not worth watching
+LONGEST = 150      # above this, three of them will not fit
+BUDGET = 420       # total moves in a loop, which is most of the file size
 TRIES = 40         # seeds to look through for a life that fits
 
 FRIGHT_STEPS = 20  # how long an energizer lasts
 GHOST_BACK = 9     # steps an eaten ghost spends away from the board
-# Five lives only fit if each is short, so they come for him sooner. Measured:
-# with these two, a third of the seeds end in a death between 40 and 70 moves,
-# which is what the search below is looking for.
-RELENTLESS = 20    # after this many moves of one life, they stop dawdling
-SETTLE = 40.0      # and their wandering fades out over this many
+# How long they let him live. Measured against the window the search below is
+# looking for: with these two, a third of the seeds end in a death somewhere
+# between 90 and 150 moves, averaging around 117.
+RELENTLESS = 45    # after this many moves of one life, they stop dawdling
+SETTLE = 90.0      # and their wandering fades out over this many
 SCORES = (200, 400, 800, 1600)
 SCORE_FOR = 0.9
 
@@ -326,9 +326,11 @@ def compose(level, columns):
     moves would still be followed by the death animation, and he would die of
     nothing in an empty corridor with the ghosts somewhere else.
     """
-    # The date, so the board is playing a different match tomorrow rather than
-    # the same recording until a commit happens to change the maze.
-    base = datetime.date.today().toordinal() * 131
+    # Fresh randomness every time this runs, not a seed derived from the date.
+    # A date gives the same three games all day however often it is rebuilt,
+    # and the point of rebuilding is that the board is not the same recording
+    # twice.
+    base = random.SystemRandom().randrange(1 << 30)
     _, walkable, powers, _ = opening(level, columns)
 
     lives, cleared, spent = [], set(), 0
@@ -748,9 +750,9 @@ def draw(show, level, columns, theme):
             '<rect width="%d" height="%d" fill="%s"/>\n%s\n%s\n%s\n%s\n'
             '</svg>\n'
             % (width, height, width, height,
-               escape("Five lives of Pac-Man played out on the contribution "
+               escape("Three lives of Pac-Man played out on the contribution "
                       "graph"), FONT,
-               escape("Five lives of Pac-Man played out on the contribution "
+               escape("Three lives of Pac-Man played out on the contribution "
                       "graph"),
                "\n".join(style + rules), cherry(theme), width, height,
                theme["bg"],

@@ -1,8 +1,8 @@
 name: Activity
 
-# Draws the Activity cards from this account's own data and publishes them to
-# the `cards` branch. The README points at that branch, so nothing is fetched
-# from anyone else's server while the profile is being read.
+# Draws the Activity cards from this account's own data and commits them to
+# `assets/` on main, which is where the README points. Nothing is fetched from
+# anyone else's server while the profile is being read.
 #
 # The cards this replaces came from a free shared service. When its API budget
 # ran out it answered with a picture reading ERROR, sent as HTTP 200 -- which
@@ -10,8 +10,8 @@ name: Activity
 # outlive the outage that caused it. Drawing them here removes the dependency
 # rather than papering over it.
 #
-# This job and Pacman own one branch each. They would otherwise force-push over
-# each other, since each replaces its branch wholesale.
+# Committing to the branch the job is triggered by does not start the job
+# again: a push made with the default job token raises no workflow events.
 
 on:
   schedule:
@@ -25,8 +25,10 @@ permissions:
   contents: write
 
 concurrency:
-  group: activity
-  cancel-in-progress: true
+  # Shared with Pacman on purpose: both commit to main, and two jobs pushing
+  # at once is a race one of them loses.
+  group: publish
+  cancel-in-progress: false
 
 jobs:
   render:
@@ -49,21 +51,25 @@ jobs:
           # picture would be describing different years.
           GITHUB_TOKEN: ${{ secrets.ACTIVITY_TOKEN || github.token }}
           GITHUB_OWNER: ${{ github.repository_owner }}
-          OUTPUT_DIR: dist
+          OUTPUT_DIR: assets
           UTC_OFFSET: '3'
         run: python3 .github/scripts/render_activity.py
 
-      - name: Publish to the cards branch
+      - name: Commit the cards
         run: |
           set -euo pipefail
-          cd dist
-          git init --quiet --initial-branch=cards
           git config user.name  'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add .
+          git add assets/overview-*.svg assets/insight-*.svg assets/streak-*.svg
+          if git diff --cached --quiet; then
+            echo 'The numbers have not moved.'
+            exit 0
+          fi
           git commit --quiet -m 'Redraw the activity cards'
-          # The branch holds nothing but these generated files, so replacing its
-          # history each run is intended.
-          git push --force --quiet \
-            "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" \
-            cards
+          for attempt in 1 2 3; do
+            if git push --quiet origin HEAD:main; then
+              exit 0
+            fi
+            git pull --rebase --quiet origin main
+          done
+          exit 1

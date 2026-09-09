@@ -130,29 +130,29 @@ hash of your email" instead of base64
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/overview-light.svg" />
-  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/overview-dark.svg" alt="activity over the last 12 months" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/main/assets/overview-light.svg" />
+  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/main/assets/overview-dark.svg" alt="activity over the last 12 months" />
 </picture>
 
 <br/>
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/insight-light.svg" />
-  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/insight-dark.svg" alt="top languages by repository, and commits by hour" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/main/assets/insight-light.svg" />
+  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/main/assets/insight-dark.svg" alt="top languages by repository, and commits by hour" />
 </picture>
 
 <br/>
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/streak-light.svg" />
-  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/streak-dark.svg" alt="contribution streak" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/main/assets/streak-light.svg" />
+  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/main/assets/streak-dark.svg" alt="contribution streak" />
 </picture>
 
 <br/>
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/output/pacman-light.svg" />
-  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/output/pacman-dark.svg" alt="contribution graph as a game of Pac-Man" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/main/assets/pacman-light.svg" />
+  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/main/assets/pacman-dark.svg" alt="contribution graph as a game of Pac-Man" />
 </picture>
 
 </div>

@@ -133,29 +133,29 @@ hash of your email" instead of base64
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/overview-light.svg" />
-  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/overview-dark.svg" alt="активность за последние 12 месяцев" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/main/assets/overview-light.svg" />
+  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/main/assets/overview-dark.svg" alt="активность за последние 12 месяцев" />
 </picture>
 
 <br/>
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/insight-light.svg" />
-  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/insight-dark.svg" alt="языки по репозиториям и коммиты по часам" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/main/assets/insight-light.svg" />
+  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/main/assets/insight-dark.svg" alt="языки по репозиториям и коммиты по часам" />
 </picture>
 
 <br/>
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/streak-light.svg" />
-  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/cards/streak-dark.svg" alt="стрик контрибьюшенов" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/main/assets/streak-light.svg" />
+  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/main/assets/streak-dark.svg" alt="стрик контрибьюшенов" />
 </picture>
 
 <br/>
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/output/pacman-light.svg" />
-  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/output/pacman-dark.svg" alt="график контрибьюшенов в виде игры в пакмана" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/main/assets/pacman-light.svg" />
+  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/main/assets/pacman-dark.svg" alt="график контрибьюшенов в виде игры в пакмана" />
 </picture>
 
 </div>

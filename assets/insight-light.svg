@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="852" height="200" viewBox="0 0 852 200" role="img" aria-label="Top languages, and commits by hour" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, Helvetica, Arial, sans-serif">
+<title>Top languages, and commits by hour</title>
+<rect x="0.5" y="0.5" width="851" height="199" rx="6" fill="#FFFFFF" stroke="#D0D7DE"/>
+<text x="28" y="36" text-anchor="start" font-size="13" font-weight="600" fill="#57606A">Top languages by repo</text>
+<circle cx="336" cy="122" r="50" fill="none" stroke="#f1e05a" stroke-width="18" stroke-dasharray="261.80 52.36" stroke-dashoffset="-0.00" transform="rotate(-90 336 122)"/>
+<circle cx="336" cy="122" r="50" fill="none" stroke="#7355dd" stroke-width="18" stroke-dasharray="52.36 261.80" stroke-dashoffset="-261.80" transform="rotate(-90 336 122)"/>
+<rect x="28" y="74" width="11" height="11" rx="2" fill="#f1e05a"/>
+<text x="48" y="84" text-anchor="start" font-size="14" font-weight="400" fill="#1F2328">JavaScript</text>
+<text x="240" y="84" text-anchor="end" font-size="14" font-weight="400" fill="#57606A">83%</text>
+<rect x="28" y="100" width="11" height="11" rx="2" fill="#7355dd"/>
+<text x="48" y="110" text-anchor="start" font-size="14" font-weight="400" fill="#1F2328">C#</text>
+<text x="240" y="110" text-anchor="end" font-size="14" font-weight="400" fill="#57606A">17%</text>
+<text x="454" y="36" text-anchor="start" font-size="13" font-weight="600" fill="#57606A">Commits by hour (UTC+3)</text>
+<rect x="456.0" y="124.9" width="11.3" height="45.1" rx="2" fill="#B6D0F0"/>
+<rect x="471.3" y="149.2" width="11.3" height="20.8" rx="2" fill="#B6D0F0"/>
+<rect x="486.7" y="156.1" width="11.3" height="13.9" rx="2" fill="#B6D0F0"/>
+<rect x="502.0" y="121.5" width="11.3" height="48.5" rx="2" fill="#B6D0F0"/>
+<rect x="517.3" y="166.5" width="11.3" height="3.5" rx="2" fill="#B6D0F0"/>
+<rect x="532.7" y="168.5" width="11.3" height="1.5" rx="2" fill="#B6D0F0"/>
+<rect x="548.0" y="159.6" width="11.3" height="10.4" rx="2" fill="#B6D0F0"/>
+<rect x="563.3" y="138.8" width="11.3" height="31.2" rx="2" fill="#B6D0F0"/>
+<rect x="578.7" y="159.6" width="11.3" height="10.4" rx="2" fill="#B6D0F0"/>
+<rect x="594.0" y="166.5" width="11.3" height="3.5" rx="2" fill="#B6D0F0"/>
+<rect x="609.3" y="152.7" width="11.3" height="17.3" rx="2" fill="#B6D0F0"/>
+<rect x="624.7" y="163.1" width="11.3" height="6.9" rx="2" fill="#B6D0F0"/>
+<rect x="640.0" y="72.9" width="11.3" height="97.1" rx="2" fill="#B6D0F0"/>
+<rect x="655.3" y="142.3" width="11.3" height="27.7" rx="2" fill="#B6D0F0"/>
+<rect x="670.7" y="142.3" width="11.3" height="27.7" rx="2" fill="#B6D0F0"/>
+<rect x="686.0" y="135.3" width="11.3" height="34.7" rx="2" fill="#B6D0F0"/>
+<rect x="701.3" y="66.0" width="11.3" height="104.0" rx="2" fill="#0969DA"/>
+<rect x="716.7" y="114.5" width="11.3" height="55.5" rx="2" fill="#B6D0F0"/>
+<rect x="732.0" y="118.0" width="11.3" height="52.0" rx="2" fill="#B6D0F0"/>
+<rect x="747.3" y="152.7" width="11.3" height="17.3" rx="2" fill="#B6D0F0"/>
+<rect x="762.7" y="118.0" width="11.3" height="52.0" rx="2" fill="#B6D0F0"/>
+<rect x="778.0" y="93.7" width="11.3" height="76.3" rx="2" fill="#B6D0F0"/>
+<rect x="793.3" y="97.2" width="11.3" height="72.8" rx="2" fill="#B6D0F0"/>
+<rect x="808.7" y="93.7" width="11.3" height="76.3" rx="2" fill="#B6D0F0"/>
+<text x="461.6666666666667" y="188" text-anchor="middle" font-size="11" font-weight="400" fill="#57606A">00</text>
+<text x="553.6666666666666" y="188" text-anchor="middle" font-size="11" font-weight="400" fill="#57606A">06</text>
+<text x="645.6666666666666" y="188" text-anchor="middle" font-size="11" font-weight="400" fill="#57606A">12</text>
+<text x="737.6666666666666" y="188" text-anchor="middle" font-size="11" font-weight="400" fill="#57606A">18</text>
+<line x1="426.0" y1="30" x2="426.0" y2="172" stroke="#D0D7DE"/>
+</svg>
