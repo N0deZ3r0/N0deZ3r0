@@ -157,6 +157,22 @@ hash of your email" instead of base64
 
 </div>
 
+## Play
+
+The maze is the calendar: a day I worked on is a wall, an empty day is a corridor
+with a pellet in it, so the board redraws itself as the year fills in.
+[Comment a direction on the issue](https://github.com/N0deZ3r0/N0deZ3r0/issues/1) -- `up`, `down`, `left`, `right` -- and
+Pac-Man takes his turn. The score is shared; whoever plays, plays the same game.
+
+<div align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/game/board-light.svg" />
+  <img src="https://raw.githubusercontent.com/N0deZ3r0/N0deZ3r0/game/board-dark.svg" alt="the live game board" />
+</picture>
+
+</div>
+
 ---
 
 <div align="center">

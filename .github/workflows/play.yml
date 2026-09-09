@@ -1,0 +1,92 @@
+name: Play
+
+# One comment on issue #1 is one move of Pac-Man. The engine reads the move,
+# advances the game and publishes the board to the `game` branch, which is
+# where the README and the issue both point.
+#
+# This is a workflow with write access that a stranger can start by typing in a
+# text box, so the two things that make that safe are worth stating plainly.
+#
+# The comment reaches the job as an environment variable and never as part of a
+# command. Interpolating ${{ github.event.comment.body }} into a `run:` block
+# would paste whatever was typed straight into the shell -- backticks and all
+# -- which is the standard way these workflows are taken over. In `env:` the
+# value is passed to the process rather than pasted into the script, and the
+# only thing the engine does with it is look for one of four direction words.
+#
+# The trigger is `issue_comment`, which always runs the workflow and the script
+# from the default branch, never from a fork or a pull request. Nothing a
+# commenter controls is ever executed.
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  # Moves are serialised rather than dropped: cancelling would throw away
+  # somebody's turn, and two runs at once would fight over the branch.
+  group: play
+  cancel-in-progress: false
+
+jobs:
+  move:
+    name: Take a turn
+    if: >-
+      github.event.issue.number == 1 &&
+      !github.event.issue.pull_request &&
+      github.event.comment.user.type != 'Bot'
+    runs-on: ubuntu-latest
+
+    steps:
+      # Pinned to the commit behind v7.0.1 rather than a moving tag: a tag can
+      # be repointed at new code, and this job runs with write access.
+      - name: Check out the engine
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Check out the game
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: game
+          path: game
+
+      - name: Take the move
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACTIVITY_TOKEN || github.token }}
+          GITHUB_OWNER: ${{ github.repository_owner }}
+          OUTPUT_DIR: game
+          # The comment, as data. See the note at the top of this file.
+          MOVE: ${{ github.event.comment.body }}
+          PLAYER: ${{ github.event.comment.user.login }}
+          REQUIRE_MOVE: '1'
+        run: python3 .github/scripts/play_pacman.py
+
+      - name: Publish the board
+        id: publish
+        run: |
+          set -euo pipefail
+          cd game
+          if git diff --quiet; then
+            echo "moved=false" >> "$GITHUB_OUTPUT"
+            echo 'That comment held no direction; nothing moved.'
+            exit 0
+          fi
+          git config user.name  'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit --quiet -m 'A turn was taken'
+          git push --quiet
+          echo "moved=true" >> "$GITHUB_OUTPUT"
+
+      - name: Say the move was taken
+        if: steps.publish.outputs.moved == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        # The comment id is a number from the event, not text anybody typed.
+        run: |
+          gh api --silent \
+            -X POST "repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions" \
+            -f content=rocket
