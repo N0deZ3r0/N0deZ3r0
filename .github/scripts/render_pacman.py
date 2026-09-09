@@ -6,7 +6,7 @@ wall, an empty day is a corridor with a pellet in it. So the maze is a year of
 this account's history and it rearranges itself as the year fills in, without
 anyone designing a level.
 
-Nobody is playing. Three whole lives are played out here, when the SVG is built
+Nobody is playing. Five whole lives are played out here, when the SVG is built
 -- Pac-Man looking for the nearest pellet and backing off when something is
 close, four ghosts with four different amounts of patience, energizers, a
 chase, and the death that ends each life -- and what ships is the recording.
@@ -15,9 +15,9 @@ where scripts never run, so nothing can be decided in the browser. CSS
 animation does run there, so every move leaves here as a @keyframes rule and
 the browser only interpolates between positions settled long before.
 
-Three lives rather than one, and pellets stay eaten across them, so a loop
-holds three different games on a board that is emptier each time instead of the
-same death in the same corner forever. Which three depends on the date, so the
+Five lives rather than one, and the cherries stay eaten across them, so a loop
+holds five different games on a board that is emptier each time instead of the
+same death in the same corner forever. Which five depends on the date, so the
 board is playing a different match tomorrow.
 """
 
@@ -41,20 +41,23 @@ MARGIN = 12
 ROWS = 7
 
 STEP = 0.15        # seconds to cross one cell
-DEATH_FOR = 1.5    # the mouth opening all the way round
-REST_FOR = 0.7     # a beat before the next life starts
-PAUSE_FOR = 1.4    # and a longer one on the last, before the loop restarts
+DEATH_FOR = 1.3    # the mouth opening all the way round
+REST_FOR = 0.5     # a beat before the next life starts
+PAUSE_FOR = 1.3    # and a longer one on the last, before the loop restarts
 
-LIVES = 3
-SHORTEST = 55      # a life below this is not worth watching
-LONGEST = 130      # above this, three of them will not fit
-BUDGET = 300       # total moves in a loop, which is most of the file size
+LIVES = 5
+SHORTEST = 40      # a life below this is not worth watching
+LONGEST = 70       # above this, five of them will not fit
+BUDGET = 320       # total moves in a loop, which is most of the file size
 TRIES = 40         # seeds to look through for a life that fits
 
 FRIGHT_STEPS = 20  # how long an energizer lasts
 GHOST_BACK = 9     # steps an eaten ghost spends away from the board
-RELENTLESS = 30    # after this many moves of one life, they stop dawdling
-SETTLE = 60.0      # and their wandering fades out over this many
+# Five lives only fit if each is short, so they come for him sooner. Measured:
+# with these two, a third of the seeds end in a death between 40 and 70 moves,
+# which is what the search below is looking for.
+RELENTLESS = 20    # after this many moves of one life, they stop dawdling
+SETTLE = 40.0      # and their wandering fades out over this many
 SCORES = (200, 400, 800, 1600)
 SCORE_FOR = 0.9
 
@@ -67,9 +70,11 @@ WANDER = (0.12, 0.30, 0.45, 0.62)
 # GitHub's own two palettes, so the graph looks like the graph it is drawn from.
 THEMES = {
     "light": {"bg": "#FFFFFF", "pellet": "#D8DEE4", "power": "#E09B54",
+              "berry": "#E5484D", "stem": "#2EA043",
               "levels": ["#EBEDF0", "#9BE9A8", "#40C463", "#30A14E",
                          "#216E39"]},
     "dark": {"bg": "#0D1117", "pellet": "#30363D", "power": "#FFB897",
+             "berry": "#FF6369", "stem": "#3FB950",
              "levels": ["#161B22", "#0E4429", "#006D32", "#26A641",
                         "#39D353"]},
 }
@@ -549,6 +554,26 @@ def sprite():
                PACMAN, spokes))
 
 
+def cherry(theme):
+    """The one cherry every corridor holds a copy of.
+
+    Described once in a defs block and pointed at by every cell, so three
+    hundred of them cost a reference each instead of a drawing each -- which
+    is how the board came out smaller as cherries than it was as dots. Drawn
+    around its own origin, because <use> places a copy by translating it.
+    """
+    # Drawn at about half the size a cherry wants to be. At full size three
+    # hundred of them are a wall of red and the contribution graph underneath
+    # -- the thing the board is made of -- stops being readable at all.
+    return ('<defs><g id="ch" transform="scale(.58)">'
+            '<path d="M-1.9,-0.4 Q-1.3,-3.3 0.2,-3.5 Q1.7,-3.3 1.9,-0.4" '
+            'fill="none" stroke="%s" stroke-width="1.1" '
+            'stroke-linecap="round"/>'
+            '<circle cx="-1.9" cy="1.4" r="2.1" fill="%s"/>'
+            '<circle cx="1.9" cy="1.4" r="2.1" fill="%s"/></g></defs>'
+            % (theme["stem"], theme["berry"], theme["berry"]))
+
+
 def ghost(index, colour):
     return ('<g class="g%d"><g class="calm"><path d="%s" fill="%s"/>'
             '<circle cx="-2.4" cy="-1.2" r="2" fill="#FFFFFF"/>'
@@ -633,8 +658,11 @@ def draw(show, level, columns, theme):
                           'cy="%.1f" r="3.4" fill="%s"/></g>'
                           % (name, x, y, theme["power"]))
         else:
-            shapes.append('<circle class="%s" cx="%.1f" cy="%.1f" r="1.6" '
-                          'fill="%s"/>' % (name, x, y, theme["pellet"]))
+            # One cherry described once and referenced 300 times: a <use> is
+            # shorter than the circle it replaces, so the board costs less to
+            # send than it did as dots.
+            shapes.append('<use class="%s" href="#ch" x="%d" y="%d"/>'
+                          % (name, round(x), round(y)))
         when = eaten_at.get(cell)
         if when is None:
             continue
@@ -714,15 +742,16 @@ def draw(show, level, columns, theme):
 
     return ('<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" '
             'viewBox="0 0 %d %d" role="img" aria-label="%s" '
-            'font-family="%s">\n<title>%s</title>\n<style>%s</style>\n'
+            'font-family="%s">\n<title>%s</title>\n<style>%s</style>\n%s\n'
             '<rect width="%d" height="%d" fill="%s"/>\n%s\n%s\n%s\n%s\n'
             '</svg>\n'
             % (width, height, width, height,
-               escape("Three lives of Pac-Man played out on the contribution "
+               escape("Five lives of Pac-Man played out on the contribution "
                       "graph"), FONT,
-               escape("Three lives of Pac-Man played out on the contribution "
+               escape("Five lives of Pac-Man played out on the contribution "
                       "graph"),
-               "\n".join(style + rules), width, height, theme["bg"],
+               "\n".join(style + rules), cherry(theme), width, height,
+               theme["bg"],
                "\n".join(shapes),
                "\n".join(ghost(index + 1, colour)
                          for index, colour in enumerate(GHOSTS)),
