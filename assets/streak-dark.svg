@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="852" height="168" viewBox="0 0 852 168" role="img" aria-label="Contribution streak" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, Helvetica, Arial, sans-serif">
 <title>Contribution streak</title>
 <rect x="0.5" y="0.5" width="851" height="167" rx="6" fill="#0D1117" stroke="#21262D"/>
-<text x="142.0" y="86" text-anchor="middle" font-size="38" font-weight="700" fill="#C9D1D9">538</text>
+<text x="142.0" y="86" text-anchor="middle" font-size="38" font-weight="700" fill="#C9D1D9">551</text>
 <text x="142.0" y="112" text-anchor="middle" font-size="13" font-weight="400" fill="#8B949E">Total contributions</text>
 <text x="142.0" y="134" text-anchor="middle" font-size="11" font-weight="400" fill="#8B949E">7 Jan - now</text>
 <circle cx="426.0" cy="76" r="46" fill="none" stroke="#21262D" stroke-width="5"/>
-<circle cx="426.0" cy="76" r="46" fill="none" stroke="#58A6FF" stroke-width="5" stroke-linecap="round" stroke-dasharray="0.00 289.03" transform="rotate(-90 426.0 76)"/>
-<text x="426.0" y="89" text-anchor="middle" font-size="34" font-weight="700" fill="#C9D1D9">0</text>
+<circle cx="426.0" cy="76" r="46" fill="none" stroke="#58A6FF" stroke-width="5" stroke-linecap="round" stroke-dasharray="41.29 289.03" transform="rotate(-90 426.0 76)"/>
+<text x="426.0" y="89" text-anchor="middle" font-size="34" font-weight="700" fill="#C9D1D9">2</text>
 <text x="426.0" y="142" text-anchor="middle" font-size="13" font-weight="600" fill="#58A6FF">Current streak</text>
-<text x="426.0" y="158" text-anchor="middle" font-size="11" font-weight="400" fill="#8B949E"></text>
+<text x="426.0" y="158" text-anchor="middle" font-size="11" font-weight="400" fill="#8B949E">24 Sep - 25 Sep</text>
 <text x="710.0" y="86" text-anchor="middle" font-size="38" font-weight="700" fill="#C9D1D9">14</text>
 <text x="710.0" y="112" text-anchor="middle" font-size="13" font-weight="400" fill="#8B949E">Longest streak</text>
 <text x="710.0" y="134" text-anchor="middle" font-size="11" font-weight="400" fill="#8B949E">30 Aug - 12 Sep</text>
