@@ -126,7 +126,18 @@ single file, English/Russian.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top">
+<td width="50%" valign="top">
+
+#### [server-hardening](https://github.com/N0deZ3r0/server-hardening)
+
+One-command Debian/Ubuntu server hardening (SSH, UFW fail2ban, auditd, sysctl) —
+2026
+
+[![CI](https://github.com/N0deZ3r0/server-hardening/actions/workflows/ci.yml/badge.svg)](https://github.com/N0deZ3r0/server-hardening/actions/workflows/ci.yml)
+[![Лицензия](https://img.shields.io/github/license/N0deZ3r0/server-hardening?label=%D0%BB%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F&labelColor=0d1117&color=6e40c9)](https://github.com/N0deZ3r0/server-hardening/blob/main/LICENSE)
+
+</td>
+<td width="50%" valign="top">
 
 #### [X-ray-for-web](https://github.com/N0deZ3r0/X-ray-for-web)
 
