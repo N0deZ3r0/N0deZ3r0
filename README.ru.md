@@ -114,6 +114,21 @@ WebAssembly, 32 заблокированных трекера, 11 перехва
 </td>
 <td width="50%" valign="top">
 
+#### [mirage](https://github.com/N0deZ3r0/mirage)
+
+Chrome MV3 extension: the browser answers "where am I" as the country your VPN
+exits in — time zone, language, geolocation and WebRTC, in the window, frames
+and workers. Interface in English and Russian, following the browser. Every
+suite compares against a real browser in that place
+
+[![CI](https://github.com/N0deZ3r0/mirage/actions/workflows/ci.yml/badge.svg)](https://github.com/N0deZ3r0/mirage/actions/workflows/ci.yml)
+[![Релиз](https://img.shields.io/github/v/release/N0deZ3r0/mirage?label=%D1%80%D0%B5%D0%BB%D0%B8%D0%B7&labelColor=0d1117&color=1f6feb)](https://github.com/N0deZ3r0/mirage/releases/latest)
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
 #### [deep-defense](https://github.com/N0deZ3r0/deep-defense)
 
 A password manager in Rust: Argon2id, a cipher cascade of AES-256-GCM and
@@ -124,8 +139,6 @@ single file, English/Russian.
 [![Релиз](https://img.shields.io/github/v/release/N0deZ3r0/deep-defense?label=%D1%80%D0%B5%D0%BB%D0%B8%D0%B7&labelColor=0d1117&color=1f6feb)](https://github.com/N0deZ3r0/deep-defense/releases/latest)
 
 </td>
-</tr>
-<tr>
 <td width="50%" valign="top">
 
 #### [server-hardening](https://github.com/N0deZ3r0/server-hardening)
@@ -137,7 +150,9 @@ One-command Debian/Ubuntu server hardening (SSH, UFW fail2ban, auditd, sysctl) �
 [![Релиз](https://img.shields.io/github/v/release/N0deZ3r0/server-hardening?label=%D1%80%D0%B5%D0%BB%D0%B8%D0%B7&labelColor=0d1117&color=1f6feb)](https://github.com/N0deZ3r0/server-hardening/releases/latest)
 
 </td>
-<td width="50%" valign="top">
+</tr>
+<tr>
+<td colspan="2" valign="top">
 
 #### [X-ray-for-web](https://github.com/N0deZ3r0/X-ray-for-web)
 
