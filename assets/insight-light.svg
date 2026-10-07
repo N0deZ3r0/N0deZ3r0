@@ -2,22 +2,22 @@
 <title>Top languages, and commits by hour</title>
 <rect x="0.5" y="0.5" width="851" height="199" rx="6" fill="#FFFFFF" stroke="#D0D7DE"/>
 <text x="28" y="36" text-anchor="start" font-size="13" font-weight="600" fill="#57606A">Top languages by repo</text>
-<circle cx="336" cy="122" r="50" fill="none" stroke="#f1e05a" stroke-width="18" stroke-dasharray="196.35 117.81" stroke-dashoffset="-0.00" transform="rotate(-90 336 122)"/>
-<circle cx="336" cy="122" r="50" fill="none" stroke="#7355dd" stroke-width="18" stroke-dasharray="39.27 274.89" stroke-dashoffset="-196.35" transform="rotate(-90 336 122)"/>
-<circle cx="336" cy="122" r="50" fill="none" stroke="#dea584" stroke-width="18" stroke-dasharray="39.27 274.89" stroke-dashoffset="-235.62" transform="rotate(-90 336 122)"/>
-<circle cx="336" cy="122" r="50" fill="none" stroke="#89e051" stroke-width="18" stroke-dasharray="39.27 274.89" stroke-dashoffset="-274.89" transform="rotate(-90 336 122)"/>
+<circle cx="336" cy="122" r="50" fill="none" stroke="#f1e05a" stroke-width="18" stroke-dasharray="209.44 104.72" stroke-dashoffset="-0.00" transform="rotate(-90 336 122)"/>
+<circle cx="336" cy="122" r="50" fill="none" stroke="#7355dd" stroke-width="18" stroke-dasharray="34.91 279.25" stroke-dashoffset="-209.44" transform="rotate(-90 336 122)"/>
+<circle cx="336" cy="122" r="50" fill="none" stroke="#dea584" stroke-width="18" stroke-dasharray="34.91 279.25" stroke-dashoffset="-244.35" transform="rotate(-90 336 122)"/>
+<circle cx="336" cy="122" r="50" fill="none" stroke="#89e051" stroke-width="18" stroke-dasharray="34.91 279.25" stroke-dashoffset="-279.25" transform="rotate(-90 336 122)"/>
 <rect x="28" y="74" width="11" height="11" rx="2" fill="#f1e05a"/>
 <text x="48" y="84" text-anchor="start" font-size="14" font-weight="400" fill="#1F2328">JavaScript</text>
-<text x="240" y="84" text-anchor="end" font-size="14" font-weight="400" fill="#57606A">62%</text>
+<text x="240" y="84" text-anchor="end" font-size="14" font-weight="400" fill="#57606A">67%</text>
 <rect x="28" y="100" width="11" height="11" rx="2" fill="#7355dd"/>
 <text x="48" y="110" text-anchor="start" font-size="14" font-weight="400" fill="#1F2328">C#</text>
-<text x="240" y="110" text-anchor="end" font-size="14" font-weight="400" fill="#57606A">12%</text>
+<text x="240" y="110" text-anchor="end" font-size="14" font-weight="400" fill="#57606A">11%</text>
 <rect x="28" y="126" width="11" height="11" rx="2" fill="#dea584"/>
 <text x="48" y="136" text-anchor="start" font-size="14" font-weight="400" fill="#1F2328">Rust</text>
-<text x="240" y="136" text-anchor="end" font-size="14" font-weight="400" fill="#57606A">12%</text>
+<text x="240" y="136" text-anchor="end" font-size="14" font-weight="400" fill="#57606A">11%</text>
 <rect x="28" y="152" width="11" height="11" rx="2" fill="#89e051"/>
 <text x="48" y="162" text-anchor="start" font-size="14" font-weight="400" fill="#1F2328">Shell</text>
-<text x="240" y="162" text-anchor="end" font-size="14" font-weight="400" fill="#57606A">12%</text>
+<text x="240" y="162" text-anchor="end" font-size="14" font-weight="400" fill="#57606A">11%</text>
 <text x="454" y="36" text-anchor="start" font-size="13" font-weight="600" fill="#57606A">Commits by hour (UTC+3)</text>
 <rect x="456.0" y="142.1" width="11.3" height="27.9" rx="2" fill="#B6D0F0"/>
 <rect x="471.3" y="158.9" width="11.3" height="11.1" rx="2" fill="#B6D0F0"/>
@@ -38,9 +38,9 @@
 <rect x="701.3" y="103.1" width="11.3" height="66.9" rx="2" fill="#B6D0F0"/>
 <rect x="716.7" y="134.7" width="11.3" height="35.3" rx="2" fill="#B6D0F0"/>
 <rect x="732.0" y="125.4" width="11.3" height="44.6" rx="2" fill="#B6D0F0"/>
-<rect x="747.3" y="149.6" width="11.3" height="20.4" rx="2" fill="#B6D0F0"/>
+<rect x="747.3" y="147.7" width="11.3" height="22.3" rx="2" fill="#B6D0F0"/>
 <rect x="762.7" y="97.6" width="11.3" height="72.4" rx="2" fill="#B6D0F0"/>
-<rect x="778.0" y="82.7" width="11.3" height="87.3" rx="2" fill="#B6D0F0"/>
+<rect x="778.0" y="79.0" width="11.3" height="91.0" rx="2" fill="#B6D0F0"/>
 <rect x="793.3" y="95.7" width="11.3" height="74.3" rx="2" fill="#B6D0F0"/>
 <rect x="808.7" y="123.6" width="11.3" height="46.4" rx="2" fill="#B6D0F0"/>
 <text x="461.6666666666667" y="188" text-anchor="middle" font-size="11" font-weight="400" fill="#57606A">00</text>
