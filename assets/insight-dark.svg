@@ -38,11 +38,11 @@
 <rect x="701.3" y="103.1" width="11.3" height="66.9" rx="2" fill="#26456E"/>
 <rect x="716.7" y="134.7" width="11.3" height="35.3" rx="2" fill="#26456E"/>
 <rect x="732.0" y="125.4" width="11.3" height="44.6" rx="2" fill="#26456E"/>
-<rect x="747.3" y="147.7" width="11.3" height="22.3" rx="2" fill="#26456E"/>
-<rect x="762.7" y="97.6" width="11.3" height="72.4" rx="2" fill="#26456E"/>
-<rect x="778.0" y="79.0" width="11.3" height="91.0" rx="2" fill="#26456E"/>
-<rect x="793.3" y="95.7" width="11.3" height="74.3" rx="2" fill="#26456E"/>
-<rect x="808.7" y="123.6" width="11.3" height="46.4" rx="2" fill="#26456E"/>
+<rect x="747.3" y="144.0" width="11.3" height="26.0" rx="2" fill="#26456E"/>
+<rect x="762.7" y="92.0" width="11.3" height="78.0" rx="2" fill="#26456E"/>
+<rect x="778.0" y="77.1" width="11.3" height="92.9" rx="2" fill="#26456E"/>
+<rect x="793.3" y="93.9" width="11.3" height="76.1" rx="2" fill="#26456E"/>
+<rect x="808.7" y="121.7" width="11.3" height="48.3" rx="2" fill="#26456E"/>
 <text x="461.6666666666667" y="188" text-anchor="middle" font-size="11" font-weight="400" fill="#8B949E">00</text>
 <text x="553.6666666666666" y="188" text-anchor="middle" font-size="11" font-weight="400" fill="#8B949E">06</text>
 <text x="645.6666666666666" y="188" text-anchor="middle" font-size="11" font-weight="400" fill="#8B949E">12</text>
