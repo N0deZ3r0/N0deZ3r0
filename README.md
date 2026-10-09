@@ -111,19 +111,6 @@ number when a host is unreachable.
 </td>
 <td width="50%" valign="top">
 
-#### [server-hardening](https://github.com/N0deZ3r0/server-hardening)
-
-One-command Debian/Ubuntu server hardening (SSH, UFW fail2ban, auditd, sysctl) —
-2026
-
-[![CI](https://github.com/N0deZ3r0/server-hardening/actions/workflows/ci.yml/badge.svg)](https://github.com/N0deZ3r0/server-hardening/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/N0deZ3r0/server-hardening?label=release&labelColor=0d1117&color=1f6feb)](https://github.com/N0deZ3r0/server-hardening/releases/latest)
-
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-
 #### [mirage](https://github.com/N0deZ3r0/mirage)
 
 Chrome MV3 extension: the browser answers "where am I" as the country your VPN
@@ -133,6 +120,19 @@ suite compares against a real browser in that place
 
 [![CI](https://github.com/N0deZ3r0/mirage/actions/workflows/ci.yml/badge.svg)](https://github.com/N0deZ3r0/mirage/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/N0deZ3r0/mirage?label=release&labelColor=0d1117&color=1f6feb)](https://github.com/N0deZ3r0/mirage/releases/latest)
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+#### [server-hardening](https://github.com/N0deZ3r0/server-hardening)
+
+One-command Debian/Ubuntu server hardening (SSH, UFW fail2ban, auditd, sysctl) —
+2026
+
+[![CI](https://github.com/N0deZ3r0/server-hardening/actions/workflows/ci.yml/badge.svg)](https://github.com/N0deZ3r0/server-hardening/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/N0deZ3r0/server-hardening?label=release&labelColor=0d1117&color=1f6feb)](https://github.com/N0deZ3r0/server-hardening/releases/latest)
 
 </td>
 <td width="50%" valign="top">
