@@ -9,7 +9,14 @@
 
 </div>
 
-## О себе
+<!-- Section titles are images, not ## headings: GitHub hangs a permalink icon
+     on every heading, and on a phone it sits on the frame around the README. -->
+<p>
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/headings/about-ru-light.svg" />
+  <img src="assets/headings/about-ru-dark.svg" width="100%" height="38" alt="О себе" />
+</picture>
+</p>
 
 Занимаюсь теми частями веба, которые опознают вас, не спрашивая, — canvas, WebGL,
 метрики шрифтов, часовой пояс, геометрия экрана, — и тем, чтобы они сообщали
@@ -34,7 +41,12 @@ AmIUnique.
 В каждом репозитории ниже есть CI, политика безопасности, шаблоны задач и
 документация на двух языках.
 
-## Стек
+<p>
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/headings/stack-ru-light.svg" />
+  <img src="assets/headings/stack-ru-dark.svg" width="100%" height="38" alt="Стек" />
+</picture>
+</p>
 
 <table>
 <tr><td><b>Языки</b></td><td>JavaScript · TypeScript · C# · C++ · Python</td></tr>
@@ -43,7 +55,12 @@ AmIUnique.
 <tr><td><b>Инструменты</b></td><td>Git · GitHub Actions · Visual Studio · VS Code</td></tr>
 </table>
 
-## Избранное
+<p>
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/headings/work-ru-light.svg" />
+  <img src="assets/headings/work-ru-dark.svg" width="100%" height="38" alt="Избранное" />
+</picture>
+</p>
 
 <!-- projects:start -->
 <table>
@@ -168,7 +185,12 @@ hash of your email" instead of base64
 </table>
 <!-- projects:end -->
 
-## Активность
+<p>
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/headings/activity-ru-light.svg" />
+  <img src="assets/headings/activity-ru-dark.svg" width="100%" height="38" alt="Активность" />
+</picture>
+</p>
 
 <div align="center">
 

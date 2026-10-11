@@ -9,7 +9,14 @@
 
 </div>
 
-## About
+<!-- Section titles are images, not ## headings: GitHub hangs a permalink icon
+     on every heading, and on a phone it sits on the frame around the README. -->
+<p>
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/headings/about-light.svg" />
+  <img src="assets/headings/about-dark.svg" width="100%" height="38" alt="About" />
+</picture>
+</p>
 
 I work on the parts of the web that identify you without asking — canvas, WebGL,
 font metrics, timezone, screen geometry — and on making them report something
@@ -31,7 +38,12 @@ worth writing down once.
 Every repository below ships CI, a security policy, issue templates and
 documentation in both English and Russian.
 
-## Stack
+<p>
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/headings/stack-light.svg" />
+  <img src="assets/headings/stack-dark.svg" width="100%" height="38" alt="Stack" />
+</picture>
+</p>
 
 <table>
 <tr><td><b>Languages</b></td><td>JavaScript · TypeScript · C# · C++ · Python</td></tr>
@@ -40,7 +52,12 @@ documentation in both English and Russian.
 <tr><td><b>Tooling</b></td><td>Git · GitHub Actions · Visual Studio · VS Code</td></tr>
 </table>
 
-## Selected work
+<p>
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/headings/work-light.svg" />
+  <img src="assets/headings/work-dark.svg" width="100%" height="38" alt="Selected work" />
+</picture>
+</p>
 
 <!-- projects:start -->
 <table>
@@ -165,7 +182,12 @@ hash of your email" instead of base64
 </table>
 <!-- projects:end -->
 
-## Activity
+<p>
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/headings/activity-light.svg" />
+  <img src="assets/headings/activity-dark.svg" width="100%" height="38" alt="Activity" />
+</picture>
+</p>
 
 <div align="center">
 
