@@ -50,7 +50,7 @@ AmIUnique.
 <tr>
 <td width="50%" valign="top">
 
-#### [fingerprint-shield](https://github.com/N0deZ3r0/fingerprint-shield)
+**[fingerprint-shield](https://github.com/N0deZ3r0/fingerprint-shield)**
 
 Одна согласованная выдуманная машина — та же самая в окне, в каждом фрейме и в
 каждом воркере. Заявка, которую раскладка может опровергнуть, собирает машину,
@@ -63,7 +63,7 @@ AmIUnique.
 </td>
 <td width="50%" valign="top">
 
-#### [Win11Privacy](https://github.com/N0deZ3r0/Win11Privacy)
+**[Win11Privacy](https://github.com/N0deZ3r0/Win11Privacy)**
 
 Отключает сбор данных Microsoft, показывает, что об этой машине уже собрано, и
 продолжает проверять систему по расписанию — потому что крупные обновления тихо
@@ -77,7 +77,7 @@ AmIUnique.
 <tr>
 <td width="50%" valign="top">
 
-#### [hh-ru-job-automation-bot](https://github.com/N0deZ3r0/hh-ru-job-automation-bot)
+**[hh-ru-job-automation-bot](https://github.com/N0deZ3r0/hh-ru-job-automation-bot)**
 
 Откликается на вакансии hh.ru за пятью рубежами обороны — 26 функций
 WebAssembly, 32 заблокированных трекера, 11 перехваченных API, — чтобы сайт не
@@ -89,7 +89,7 @@ WebAssembly, 32 заблокированных трекера, 11 перехва
 </td>
 <td width="50%" valign="top">
 
-#### [AutoSend-Letters-HH.RU](https://github.com/N0deZ3r0/AutoSend-Letters-HH.RU)
+**[AutoSend-Letters-HH.RU](https://github.com/N0deZ3r0/AutoSend-Letters-HH.RU)**
 
 То же самое без расширения: один внедряемый скрипт, который проверяет, куда вы
 уже откликнулись, заполняет сопроводительное письмо и листает страницы.
@@ -102,7 +102,7 @@ WebAssembly, 32 заблокированных трекера, 11 перехва
 <tr>
 <td width="50%" valign="top">
 
-#### [Quick-Ping-Chrome-Extension](https://github.com/N0deZ3r0/Quick-Ping-Chrome-Extension)
+**[Quick-Ping-Chrome-Extension](https://github.com/N0deZ3r0/Quick-Ping-Chrome-Extension)**
 
 Время отклика любого сайта прямо из панели Chrome. Ввели адрес — получили
 миллисекунды. Без регистрации, без настройки, и `ERROR` вместо выдуманного
@@ -114,7 +114,7 @@ WebAssembly, 32 заблокированных трекера, 11 перехва
 </td>
 <td width="50%" valign="top">
 
-#### [mirage](https://github.com/N0deZ3r0/mirage)
+**[mirage](https://github.com/N0deZ3r0/mirage)**
 
 Chrome MV3 extension: the browser answers "where am I" as the country your VPN
 exits in — time zone, language, geolocation and WebRTC, in the window, frames
@@ -129,7 +129,7 @@ suite compares against a real browser in that place
 <tr>
 <td width="50%" valign="top">
 
-#### [server-hardening](https://github.com/N0deZ3r0/server-hardening)
+**[server-hardening](https://github.com/N0deZ3r0/server-hardening)**
 
 One-command Debian/Ubuntu server hardening (SSH, UFW fail2ban, auditd, sysctl) —
 2026
@@ -140,7 +140,7 @@ One-command Debian/Ubuntu server hardening (SSH, UFW fail2ban, auditd, sysctl) �
 </td>
 <td width="50%" valign="top">
 
-#### [deep-defense](https://github.com/N0deZ3r0/deep-defense)
+**[deep-defense](https://github.com/N0deZ3r0/deep-defense)**
 
 A password manager in Rust: Argon2id, a cipher cascade of AES-256-GCM and
 XChaCha20-Poly1305, a deniable hidden vault, and Shamir recovery. Windows,
@@ -154,7 +154,7 @@ single file, English/Russian.
 <tr>
 <td colspan="2" valign="top">
 
-#### [X-ray-for-web](https://github.com/N0deZ3r0/X-ray-for-web)
+**[X-ray-for-web](https://github.com/N0deZ3r0/X-ray-for-web)**
 
 Chrome MV3 instrument, not a blocker: a journal of which script read which
 fingerprinting surface, and outgoing beacons parsed field by field — "this is a

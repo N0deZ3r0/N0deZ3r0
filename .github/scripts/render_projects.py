@@ -131,7 +131,9 @@ def badges(repo, language):
 
 def card(repo, language, written):
     slug = "%s/%s" % (OWNER, repo["name"])
-    lines = ["#### [%s](https://github.com/%s)" % (repo["name"], slug)]
+    # Bold, not a heading: GitHub hangs a permalink icon to the left of every
+    # heading, and inside a table cell that icon lands across the cell border.
+    lines = ["**[%s](https://github.com/%s)**" % (repo["name"], slug)]
 
     blurb = (written.get(repo["name"]) or {}).get(language)
     if blurb is None and repo.get("description"):
