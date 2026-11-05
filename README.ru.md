@@ -131,6 +131,21 @@ WebAssembly, 32 заблокированных трекера, 11 перехва
 </td>
 <td width="50%" valign="top">
 
+**[amnezia-ru-sites](https://github.com/N0deZ3r0/amnezia-ru-sites)**
+
+набор готовых JSON-списков популярных российских сайтов для Amnezia VPN.
+Импортируете файл в клиент — и российские сервисы (банки, Госуслуги,
+маркетплейсы) открываются напрямую, а весь остальной трафик идёт через VPN.
+Списки обновляются автоматически каждую неделю.
+
+[![Сборка](https://img.shields.io/github/actions/workflow/status/N0deZ3r0/amnezia-ru-sites/check.yml?branch=main&labelColor=0d1117&label=%D1%81%D0%B1%D0%BE%D1%80%D0%BA%D0%B0)](https://github.com/N0deZ3r0/amnezia-ru-sites/actions/workflows/check.yml)
+[![Лицензия](https://img.shields.io/github/license/N0deZ3r0/amnezia-ru-sites?label=%D0%BB%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F&labelColor=0d1117&color=6e40c9)](https://github.com/N0deZ3r0/amnezia-ru-sites/blob/main/LICENSE)
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
 **[server-hardening](https://github.com/N0deZ3r0/server-hardening)**
 
 One-command Debian/Ubuntu server hardening (SSH, UFW fail2ban, auditd, sysctl) —
@@ -140,8 +155,6 @@ One-command Debian/Ubuntu server hardening (SSH, UFW fail2ban, auditd, sysctl) �
 [![Релиз](https://img.shields.io/github/v/release/N0deZ3r0/server-hardening?label=%D1%80%D0%B5%D0%BB%D0%B8%D0%B7&labelColor=0d1117&color=1f6feb)](https://github.com/N0deZ3r0/server-hardening/releases/latest)
 
 </td>
-</tr>
-<tr>
 <td width="50%" valign="top">
 
 **[mirage](https://github.com/N0deZ3r0/mirage)**
@@ -155,6 +168,8 @@ suite compares against a real browser in that place
 [![Релиз](https://img.shields.io/github/v/release/N0deZ3r0/mirage?label=%D1%80%D0%B5%D0%BB%D0%B8%D0%B7&labelColor=0d1117&color=1f6feb)](https://github.com/N0deZ3r0/mirage/releases/latest)
 
 </td>
+</tr>
+<tr>
 <td width="50%" valign="top">
 
 **[deep-defense](https://github.com/N0deZ3r0/deep-defense)**
@@ -167,9 +182,7 @@ single file, English/Russian.
 [![Релиз](https://img.shields.io/github/v/release/N0deZ3r0/deep-defense?label=%D1%80%D0%B5%D0%BB%D0%B8%D0%B7&labelColor=0d1117&color=1f6feb)](https://github.com/N0deZ3r0/deep-defense/releases/latest)
 
 </td>
-</tr>
-<tr>
-<td colspan="2" valign="top">
+<td width="50%" valign="top">
 
 **[X-ray-for-web](https://github.com/N0deZ3r0/X-ray-for-web)**
 
