@@ -130,10 +130,8 @@ number when a host is unreachable.
 
 **[amnezia-ru-sites](https://github.com/N0deZ3r0/amnezia-ru-sites)**
 
-набор готовых JSON-списков популярных российских сайтов для Amnezia VPN.
-Импортируете файл в клиент — и российские сервисы (банки, Госуслуги,
-маркетплейсы) открываются напрямую, а весь остальной трафик идёт через VPN.
-Списки обновляются автоматически каждую неделю.
+Списки российских сайтов для раздельного туннелирования в Amnezia VPN.
+Обновляются автоматически раз в неделю
 
 [![Build](https://img.shields.io/github/actions/workflow/status/N0deZ3r0/amnezia-ru-sites/check.yml?branch=main&labelColor=0d1117&label=build)](https://github.com/N0deZ3r0/amnezia-ru-sites/actions/workflows/check.yml)
 [![License](https://img.shields.io/github/license/N0deZ3r0/amnezia-ru-sites?labelColor=0d1117&color=6e40c9)](https://github.com/N0deZ3r0/amnezia-ru-sites/blob/main/LICENSE)

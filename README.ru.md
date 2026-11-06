@@ -133,10 +133,8 @@ WebAssembly, 32 заблокированных трекера, 11 перехва
 
 **[amnezia-ru-sites](https://github.com/N0deZ3r0/amnezia-ru-sites)**
 
-набор готовых JSON-списков популярных российских сайтов для Amnezia VPN.
-Импортируете файл в клиент — и российские сервисы (банки, Госуслуги,
-маркетплейсы) открываются напрямую, а весь остальной трафик идёт через VPN.
-Списки обновляются автоматически каждую неделю.
+Списки российских сайтов для раздельного туннелирования в Amnezia VPN.
+Обновляются автоматически раз в неделю
 
 [![Сборка](https://img.shields.io/github/actions/workflow/status/N0deZ3r0/amnezia-ru-sites/check.yml?branch=main&labelColor=0d1117&label=%D1%81%D0%B1%D0%BE%D1%80%D0%BA%D0%B0)](https://github.com/N0deZ3r0/amnezia-ru-sites/actions/workflows/check.yml)
 [![Лицензия](https://img.shields.io/github/license/N0deZ3r0/amnezia-ru-sites?label=%D0%BB%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F&labelColor=0d1117&color=6e40c9)](https://github.com/N0deZ3r0/amnezia-ru-sites/blob/main/LICENSE)
