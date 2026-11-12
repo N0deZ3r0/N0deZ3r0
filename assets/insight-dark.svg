@@ -21,7 +21,7 @@
 <text x="454" y="36" text-anchor="start" font-size="13" font-weight="600" fill="#8B949E">Commits by hour (UTC+3)</text>
 <rect x="456.0" y="142.6" width="11.3" height="27.4" rx="2" fill="#26456E"/>
 <rect x="471.3" y="159.1" width="11.3" height="10.9" rx="2" fill="#26456E"/>
-<rect x="486.7" y="162.7" width="11.3" height="7.3" rx="2" fill="#26456E"/>
+<rect x="486.7" y="160.9" width="11.3" height="9.1" rx="2" fill="#26456E"/>
 <rect x="502.0" y="144.5" width="11.3" height="25.5" rx="2" fill="#26456E"/>
 <rect x="517.3" y="168.2" width="11.3" height="1.8" rx="2" fill="#26456E"/>
 <rect x="532.7" y="168.5" width="11.3" height="1.5" rx="2" fill="#26456E"/>
@@ -30,18 +30,18 @@
 <rect x="578.7" y="162.7" width="11.3" height="7.3" rx="2" fill="#26456E"/>
 <rect x="594.0" y="168.2" width="11.3" height="1.8" rx="2" fill="#26456E"/>
 <rect x="609.3" y="159.1" width="11.3" height="10.9" rx="2" fill="#26456E"/>
-<rect x="624.7" y="137.2" width="11.3" height="32.8" rx="2" fill="#26456E"/>
+<rect x="624.7" y="135.3" width="11.3" height="34.7" rx="2" fill="#26456E"/>
 <rect x="640.0" y="66.0" width="11.3" height="104.0" rx="2" fill="#58A6FF"/>
 <rect x="655.3" y="137.2" width="11.3" height="32.8" rx="2" fill="#26456E"/>
 <rect x="670.7" y="137.2" width="11.3" height="32.8" rx="2" fill="#26456E"/>
-<rect x="686.0" y="135.3" width="11.3" height="34.7" rx="2" fill="#26456E"/>
+<rect x="686.0" y="131.7" width="11.3" height="38.3" rx="2" fill="#26456E"/>
 <rect x="701.3" y="100.7" width="11.3" height="69.3" rx="2" fill="#26456E"/>
-<rect x="716.7" y="135.3" width="11.3" height="34.7" rx="2" fill="#26456E"/>
-<rect x="732.0" y="120.7" width="11.3" height="49.3" rx="2" fill="#26456E"/>
-<rect x="747.3" y="142.6" width="11.3" height="27.4" rx="2" fill="#26456E"/>
-<rect x="762.7" y="82.4" width="11.3" height="87.6" rx="2" fill="#26456E"/>
-<rect x="778.0" y="73.3" width="11.3" height="96.7" rx="2" fill="#26456E"/>
-<rect x="793.3" y="86.1" width="11.3" height="83.9" rx="2" fill="#26456E"/>
+<rect x="716.7" y="129.9" width="11.3" height="40.1" rx="2" fill="#26456E"/>
+<rect x="732.0" y="118.9" width="11.3" height="51.1" rx="2" fill="#26456E"/>
+<rect x="747.3" y="139.0" width="11.3" height="31.0" rx="2" fill="#26456E"/>
+<rect x="762.7" y="80.6" width="11.3" height="89.4" rx="2" fill="#26456E"/>
+<rect x="778.0" y="71.5" width="11.3" height="98.5" rx="2" fill="#26456E"/>
+<rect x="793.3" y="82.4" width="11.3" height="87.6" rx="2" fill="#26456E"/>
 <rect x="808.7" y="118.9" width="11.3" height="51.1" rx="2" fill="#26456E"/>
 <text x="461.6666666666667" y="188" text-anchor="middle" font-size="11" font-weight="400" fill="#8B949E">00</text>
 <text x="553.6666666666666" y="188" text-anchor="middle" font-size="11" font-weight="400" fill="#8B949E">06</text>
